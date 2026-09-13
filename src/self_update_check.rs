@@ -161,9 +161,7 @@ pub fn handle_apt_update() -> Result<Option<(String, String)>> {
 
             if inst == "(none)" {
                 println!(" [!] Package is not currently installed.");
-                println!(
-                    "     -> curl -fsSL https://idlescreen.github.io/install.sh | sh"
-                );
+                println!("     -> curl -fsSL https://idlescreen.github.io/install.sh | sh");
                 return Ok(None);
             } else if version_cmp(&inst, &cand).is_lt() {
                 println!(" [!] Update available: {inst} → {cand}");
@@ -182,9 +180,7 @@ pub fn handle_apt_update() -> Result<Option<(String, String)>> {
                 Ok(Some((pkg.to_string(), inst)))
             } else {
                 println!(" [!] Could not determine package status.");
-                println!(
-                    "     -> curl -fsSL https://idlescreen.github.io/install.sh | sh"
-                );
+                println!("     -> curl -fsSL https://idlescreen.github.io/install.sh | sh");
                 Ok(None)
             }
         }
