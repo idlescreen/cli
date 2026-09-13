@@ -79,7 +79,7 @@ pub fn check_package_install() -> CheckResult {
         }
         return fail(
             "Package",
-            "idle-daemon / idle-cli not installed — curl -fsSL https://idlescreen.github.io/packages/install.sh | sh",
+            "idle-daemon / idle-cli not installed — curl -fsSL https://idlescreen.github.io/install.sh | sh",
         );
     }
 

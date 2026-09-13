@@ -85,7 +85,7 @@ pub fn handle_dnf_update() -> Result<Option<(String, String)>> {
 
     let Some((pkg, installed)) = first_installed(Backend::Dnf) else {
         println!(" [!] No IdleScreen RPM packages detected (idle-cli / idle-daemon).");
-        println!("     -> curl -fsSL https://idlescreen.github.io/packages/install.sh | sh");
+        println!("     -> curl -fsSL https://idlescreen.github.io/install.sh | sh");
         return Ok(None);
     };
     let available = dnf_available_version(&pkg);
@@ -162,7 +162,7 @@ pub fn handle_apt_update() -> Result<Option<(String, String)>> {
             if inst == "(none)" {
                 println!(" [!] Package is not currently installed.");
                 println!(
-                    "     -> curl -fsSL https://idlescreen.github.io/packages/install.sh | sh"
+                    "     -> curl -fsSL https://idlescreen.github.io/install.sh | sh"
                 );
                 return Ok(None);
             } else if version_cmp(&inst, &cand).is_lt() {
@@ -183,7 +183,7 @@ pub fn handle_apt_update() -> Result<Option<(String, String)>> {
             } else {
                 println!(" [!] Could not determine package status.");
                 println!(
-                    "     -> curl -fsSL https://idlescreen.github.io/packages/install.sh | sh"
+                    "     -> curl -fsSL https://idlescreen.github.io/install.sh | sh"
                 );
                 Ok(None)
             }
