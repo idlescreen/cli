@@ -1,31 +1,34 @@
-# idle-cli
+# cli
 
-Protocol commands for the IdleScreen daemon — `preview`, `stop`, `list`,
-`status`, `config`, `doctor`, `self-update`, and friends over D-Bus.
+Daemon protocol commands — `status`, `preview`, `config`, `saver`,
+`inhibitors`, `doctor`, `self-update` — over D-Bus.
+Part of [IdleScreen](https://idlescreen.github.io) — modular Wayland
+screensavers for Linux.
 
-The installed binary is **`idle-cli`**. The [`idlescreen`
-router](https://github.com/idlescreen/idlescreen) owns `/usr/bin/idlescreen`
-and forwards every daemon verb here, so `idlescreen <verb>` keeps working —
-this package depends on it.
+The installed binary is **`idle-cli`**. The
+[`idlescreen`](https://github.com/idlescreen/idlescreen) router owns
+`/usr/bin/idlescreen` and forwards every daemon verb here, so
+`idlescreen <verb>` keeps working.
 
-## Usage
+## Use
 
 ```sh
-idle-cli status          # or: idlescreen status
-idle-cli preview aurora  # or: idlescreen preview aurora
-idle-cli doctor
+idle-cli status           # or: idlescreen status
+idle-cli preview aurora   # or: idlescreen preview aurora
+idle-cli doctor           # or: idlescreen doctor
 ```
 
-## Development
+## Develop
 
-Path dependency: a sibling [`runtime`](https://github.com/idlescreen/runtime)
-checkout (or a `runtime` symlink) provides `idle-dbus`:
+Path dependency: a `runtime/` checkout inside this repo (or a symlink to a
+sibling clone) provides `idle-dbus`.
 
 ```sh
-git clone https://github.com/idlescreen/runtime ../runtime   # if needed
-cargo build
+git clone https://github.com/idlescreen/cli.git && cd cli
+git clone https://github.com/idlescreen/runtime runtime    # path dep
+cargo build && cargo test
 ```
 
 ## License
 
-Apache-2.0
+Apache-2.0 · © 2026 IdleScreen
