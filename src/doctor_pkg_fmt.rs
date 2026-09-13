@@ -6,9 +6,9 @@
 use super::doctor_checks::{CheckResult, warn};
 
 /// Warn only on skew that matters: a CLI *newer* than the daemon can call
-/// D-Bus methods the daemon lacks; different majors can drift either way.
-/// Same major.minor, different patch is the normal state — crates version
-/// independently inside a release train.
+/// D-Bus methods the daemon lacks. Post-split the repos version
+/// independently, so different majors are the normal state — not skew.
+/// Only a same-major cli-ahead pair is still a real drift signal.
 pub fn skew_result(found: &[String], summary: &str) -> Option<CheckResult> {
     let mm_of = |prefix: &str| {
         found
@@ -20,7 +20,7 @@ pub fn skew_result(found: &[String], summary: &str) -> Option<CheckResult> {
     let (Some(d), Some(c)) = (mm_of("idle-daemon"), mm_of("idle-cli")) else {
         return None;
     };
-    if d.0 == c.0 && c <= d {
+    if d.0 != c.0 || c <= d {
         return None;
     }
     Some(

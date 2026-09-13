@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 use super::package_rank;
-use crate::doctor_pkg_fmt::{display_entry, major_minor};
+use crate::doctor_pkg_fmt::{display_entry, major_minor, skew_result};
 
 #[test]
 fn major_minor_parses_release_versions() {
@@ -35,6 +35,34 @@ fn display_entry_maps_roles() {
     );
     assert_eq!(display_entry("unmanaged-thing"), "unmanaged-thing");
     assert_eq!(display_entry("idle-tui-3.2.1-1.aarch64"), "tui 3.2.1-1");
+}
+
+#[test]
+fn skew_allows_independent_majors() {
+    // Post-split repos version independently: daemon 3.5.x + cli 4.x is the
+    // normal aligned state, not drift.
+    let found = vec![
+        "idle-daemon-3.5.15-1.x86_64".to_string(),
+        "idle-cli-4.0.1-1.x86_64".to_string(),
+    ];
+    assert!(skew_result(&found, "s").is_none());
+}
+
+#[test]
+fn skew_warns_only_on_same_major_cli_ahead() {
+    // Same major, cli at or behind daemon: fine.
+    let found = vec![
+        "idle-daemon-3.5.15-1.x86_64".to_string(),
+        "idle-cli-3.5.9-1.x86_64".to_string(),
+    ];
+    assert!(skew_result(&found, "s").is_none());
+    // Same major, cli a minor ahead: it may call D-Bus methods the daemon
+    // lacks. (Patch differences are intentionally ignored.)
+    let found = vec![
+        "idle-daemon-3.4.0-1.x86_64".to_string(),
+        "idle-cli-3.5.0-1.x86_64".to_string(),
+    ];
+    assert!(skew_result(&found, "s").is_some());
 }
 
 #[test]

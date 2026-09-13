@@ -1,3 +1,11 @@
+idle-cli (4.0.2-1) unstable; urgency=medium
+
+  * Doctor: stop warning on cross-major component versions — after the
+    repo split daemon/cli version independently, so daemon 3.5.x + cli 4.x
+    is the normal aligned state, not skew.
+
+ -- IdleScreen <jerydleuck@gmail.com>  Sun, 13 Sep 2026 12:50:00 +0000
+
 idle-cli (4.0.1-1) unstable; urgency=medium
 
   * Point install/update hints at the canonical
