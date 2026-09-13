@@ -20,10 +20,10 @@ idlescreen install cli
 ## Commands
 
 ```sh
-idle-cli status             # or: idlescreen status
-idle-cli preview aurora     # or: idlescreen preview aurora
-idle-cli saver set beams    # or: idlescreen saver set beams
-idle-cli doctor             # or: idlescreen doctor
+idle-cli doctor --fix    # or: idlescreen doctor --fix
+idle-cli preview storm   # or: idlescreen preview storm
+idle-cli self-update     # or: idlescreen update
+idle-cli tui             # or: idlescreen tui
 ```
 
 ## License
