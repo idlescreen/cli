@@ -123,7 +123,7 @@ pub(crate) fn run_from(args: Vec<String>) -> Result<()> {
                 let _ = e.print();
                 return Ok(());
             }
-            _ => {
+            ErrorKind::Usage => {
                 let _ = e.print();
                 return Err(UsageError.into());
             }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2026 IdleScreen
 
-use super::*;
+use super::{ParseError, usage_err};
 
 // Lexer: clap-compatible short-cluster / long / `--` / passthrough handling.
 pub(crate) enum Tok {

@@ -219,6 +219,6 @@ fn dispatch(word: &str, args: &[String], quiet: &mut bool) -> Result<Cmd, ParseE
             args: args.to_vec(),
         }),
         "version" => parse_version(&mut lx, quiet, name),
-        _ => unreachable!("canonical names are exhaustive"),
+        _ => Err(usage_err(format!("error: unrecognized subcommand '{name}'"))),
     }
 }

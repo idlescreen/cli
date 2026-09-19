@@ -3,7 +3,10 @@
 
 //! Subcommand parsers for flag-only commands.
 
-use super::*;
+use super::{
+    Cmd, CompletionShell, Lexer, ParseError, Tok, help_err, help_for, no_value, unknown_flag,
+    unknown_short, usage_err,
+};
 
 pub(crate) fn parse_doctor(
     lx: &mut Lexer<'_>,
@@ -77,7 +80,7 @@ pub(crate) fn parse_completion(
         match t {
             Tok::Short('q') => *quiet = true,
             Tok::Short('h') => return Err(help_err(help_for(name))),
-            Tok::Short(c) => return Err(unknown_short(c)),
+            Tok::Short(c) | Tok::ShortVal(c, _) => return Err(unknown_short(c)),
             Tok::Long(n, v) => {
                 no_value(&n, v)?;
                 return Err(unknown_flag(&n));
@@ -92,7 +95,6 @@ pub(crate) fn parse_completion(
                             ))
                         })?);
             }
-            Tok::ShortVal(c, _) => return Err(unknown_short(c)),
             Tok::End => {}
         }
     }

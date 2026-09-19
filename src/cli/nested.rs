@@ -3,7 +3,10 @@
 
 //! Nested subcommand parsers: config and saver.
 
-use super::*;
+use super::{
+    Cmd, ConfigOp, Lexer, ParseError, SaverOp, Tok, help_err, help_for, help_top, no_value,
+    unknown_flag, unknown_short, usage_err,
+};
 
 /// `config [op]` — `--json` is global across the config subtree.
 pub(crate) fn parse_config(lx: &mut Lexer<'_>, quiet: &mut bool) -> Result<Cmd, ParseError> {

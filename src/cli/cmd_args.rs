@@ -3,7 +3,10 @@
 
 //! Subcommand parsers that take positional values or mixed flags.
 
-use super::*;
+use super::{
+    Cmd, Lexer, OverlayState, ParseError, Tok, flag_value, help_err, help_for, no_value, parse_u32,
+    parse_u64, unknown_flag, unknown_short, usage_err,
+};
 
 pub(crate) fn parse_timeout(
     lx: &mut Lexer<'_>,
@@ -92,7 +95,7 @@ pub(crate) fn parse_fps_overlay(
         match t {
             Tok::Short('q') => *quiet = true,
             Tok::Short('h') => return Err(help_err(help_for(name))),
-            Tok::Short(c) => return Err(unknown_short(c)),
+            Tok::Short(c) | Tok::ShortVal(c, _) => return Err(unknown_short(c)),
             Tok::Long(n, v) => {
                 no_value(&n, v)?;
                 return Err(unknown_flag(&n));
@@ -112,7 +115,6 @@ pub(crate) fn parse_fps_overlay(
                     }
                 });
             }
-            Tok::ShortVal(c, _) => return Err(unknown_short(c)),
             Tok::End => {}
         }
     }
@@ -129,7 +131,7 @@ pub(crate) fn parse_render_scale(
         match t {
             Tok::Short('q') => *quiet = true,
             Tok::Short('h') => return Err(help_err(help_for(name))),
-            Tok::Short(c) => return Err(unknown_short(c)),
+            Tok::Short(c) | Tok::ShortVal(c, _) => return Err(unknown_short(c)),
             Tok::Long(n, v) => {
                 no_value(&n, v)?;
                 return Err(unknown_flag(&n));
@@ -140,7 +142,6 @@ pub(crate) fn parse_render_scale(
                 }
                 value = Some(s);
             }
-            Tok::ShortVal(c, _) => return Err(unknown_short(c)),
             Tok::End => {}
         }
     }
