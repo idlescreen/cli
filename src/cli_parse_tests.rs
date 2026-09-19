@@ -246,6 +246,49 @@ fn help_and_version_paths() {
     assert_eq!(parse(&["--version"]).unwrap_err().kind(), DisplayVersion);
 }
 
+// ---- hostile-input corpus ------------------------------------------------
+
+#[test]
+fn hostile_argv_never_panics() {
+    let cases: Vec<Vec<&str>> = vec![
+        vec![],
+        vec![""],
+        vec!["-"],
+        vec!["--"],
+        vec!["---"],
+        vec!["--=x"],
+        vec!["-qz9"],
+        vec!["status", "--", "extra"],
+        vec!["inhibit", "--reason"],
+        vec!["inhibit", "--reason="],
+        vec!["config", "get"],
+        vec!["set", "--"],
+        vec!["\u{1F600}"],
+        vec!["status"; 500],
+        vec!["completion", "zsh", "extra"],
+        vec!["-V", "-h", "-q"],
+        vec!["saver", "nonexistent", "--fps", "abc"],
+        vec!["saver", "--fps", "-1"],
+        vec!["render-scale", "0"],
+        vec!["timeout", "18446744073709551616"],
+        vec!["get", "a.b.c.d"],
+        vec!["clean", "--all", "--force", "--bogus"],
+        vec!["about", "--verbose=deep"],
+        vec!["logs", "--lines", "notanumber"],
+        vec!["preview", "/p:0xZZZZ"],
+    ];
+    for args in cases {
+        let _ = parse(&args);
+    }
+    // Exhaustive two-char short clusters.
+    for a in ['-', 'q', 'h', 'V', 'x', '9'] {
+        for b in ['-', 'q', 'h', 'V', 'x', '9'] {
+            let s = format!("{a}{b}");
+            let _ = parse(&[s.as_str()]);
+        }
+    }
+}
+
 #[cfg(test)]
 #[path = "cli_parse_tests2.rs"]
 mod extra;

@@ -1,3 +1,11 @@
+idle-cli (4.0.4-1) unstable; urgency=medium
+
+  * Replace clap/anyhow/tracing with the hand-rolled arg parser and
+    in-tree err/log modules; add bootstrap.sh for fresh checkouts and a
+    hostile-argv parser test corpus.
+
+ -- IdleScreen <jerydleuck@gmail.com>  Sun, 14 Sep 2026 10:00:00 +0000
+
 idle-cli (4.0.2-1) unstable; urgency=medium
 
   * Doctor: stop warning on cross-major component versions — after the
