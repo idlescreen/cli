@@ -1,6 +1,10 @@
 # cli
 
-[![studio2201 gate](https://github.com/idlescreen/cli/actions/workflows/studio2201.yml/badge.svg)](https://github.com/idlescreen/cli/actions/workflows/studio2201.yml)
+[![snip](https://img.shields.io/github/actions/workflow/status/idlescreen/cli/snip.yml?label=snip&logo=shield)](https://github.com/idlescreen/cli/actions/workflows/snip.yml)
+[![vigil](https://img.shields.io/github/actions/workflow/status/idlescreen/cli/vigil.yml?label=vigil&logo=shield)](https://github.com/idlescreen/cli/actions/workflows/vigil.yml)
+[![aegis](https://img.shields.io/github/actions/workflow/status/idlescreen/cli/aegis.yml?label=aegis&logo=shield)](https://github.com/idlescreen/cli/actions/workflows/aegis.yml)
+[![proven](https://img.shields.io/github/actions/workflow/status/idlescreen/cli/proven.yml?label=proven&logo=shield)](https://github.com/idlescreen/cli/actions/workflows/proven.yml)
+[![boneyard](https://img.shields.io/github/actions/workflow/status/idlescreen/cli/boneyard.yml?label=boneyard&logo=shield)](https://github.com/idlescreen/cli/actions/workflows/boneyard.yml)
 
 Daemon protocol commands — `status`, `preview`, `config`, `saver`,
 `inhibitors`, `doctor`, `self-update` — over D-Bus. Part of
