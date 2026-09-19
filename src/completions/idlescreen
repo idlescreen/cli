@@ -1,0 +1,73 @@
+# bash completion for idlescreen(1) — maintained alongside src/cli.rs
+_idlescreen() {
+    local cur prev words cword
+    _init_completion -n : || return
+
+    local cmds="status config enable disable timeout saver list inhibitors \
+inhibit start preview stop fps-overlay render-scale interactive restart logs \
+doctor clean completion bug-report self-update tui version about help \
+st cfg on off t sv ls inhib hold activate p x fps scale i rs log doc cl comp \
+bug update upgrade ui v info"
+
+    if [ "$cword" -eq 1 ]; then
+        COMPREPLY=($(compgen -W "$cmds" -- "$cur"))
+        return
+    fi
+
+    case "${words[1]}" in
+        config|cfg)
+            if [ "$cword" -eq 2 ]; then
+                COMPREPLY=($(compgen -W "list get set path edit reset" -- "$cur"))
+            elif [ "${words[2]}" = "reset" ]; then
+                COMPREPLY=($(compgen -W "-y --yes -j --json -q --quiet -h --help" -- "$cur"))
+            else
+                COMPREPLY=($(compgen -W "-j --json -q --quiet -h --help" -- "$cur"))
+            fi
+            ;;
+        saver|sv)
+            if [ "$cword" -eq 2 ]; then
+                COMPREPLY=($(compgen -W "set list" -- "$cur"))
+            else
+                COMPREPLY=($(compgen -W "-j --json -q --quiet -h --help" -- "$cur"))
+            fi
+            ;;
+        status|st|list|ls|inhibitors|inhib|timeout|t|version|v)
+            COMPREPLY=($(compgen -W "-j --json -l --long -q --quiet -h --help" -- "$cur"))
+            ;;
+        doctor|doc)
+            COMPREPLY=($(compgen -W "-f --fix -j --json -q --quiet -h --help" -- "$cur"))
+            ;;
+        logs|log)
+            COMPREPLY=($(compgen -W "-f --follow -n --lines -q --quiet -h --help" -- "$cur"))
+            ;;
+        clean|cl)
+            COMPREPLY=($(compgen -W "-n --dry-run -q --quiet -h --help" -- "$cur"))
+            ;;
+        self-update|update|upgrade)
+            COMPREPLY=($(compgen -W "-c --check -q --quiet -h --help" -- "$cur"))
+            ;;
+        completion|comp)
+            COMPREPLY=($(compgen -W "bash zsh fish nushell powershell elvish" -- "$cur"))
+            ;;
+        inhibit|hold)
+            COMPREPLY=($(compgen -W "-r --reason -q --quiet -h --help" -- "$cur"))
+            compopt -o default 2>/dev/null
+            ;;
+        tui|ui)
+            compopt -o default 2>/dev/null
+            ;;
+        preview|p)
+            COMPREPLY=($(compgen -W "-t --timeout -q --quiet -h --help" -- "$cur"))
+            ;;
+        fps-overlay|fps)
+            COMPREPLY=($(compgen -W "on off status" -- "$cur"))
+            ;;
+        render-scale|scale)
+            COMPREPLY=($(compgen -W "default status" -- "$cur"))
+            ;;
+        *)
+            COMPREPLY=($(compgen -W "-q --quiet -h --help" -- "$cur"))
+            ;;
+    esac
+}
+complete -F _idlescreen idlescreen

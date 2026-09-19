@@ -7,7 +7,7 @@
 use std::io::IsTerminal;
 use std::process::Command;
 
-use anyhow::{Context, Result, bail};
+use crate::err::{Context, Result, bail};
 
 use crate::cli::ConfigOp;
 use crate::doctor_fs::get_config_path;

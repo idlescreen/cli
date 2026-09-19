@@ -7,12 +7,12 @@
 
 use std::process::ExitCode;
 
-use anyhow::{Context, Result, bail};
 use cli::Cmd;
 use commands::{
     cmd_fps_overlay, cmd_inhibitors, cmd_list, cmd_preview, cmd_render_scale, cmd_status,
     cmd_timeout, print_version,
 };
+use err::{Context, Result, bail};
 use idle_dbus::{TranceClient, daemon_available};
 
 mod bug_report;
@@ -31,8 +31,10 @@ mod doctor_pkg_fmt;
 mod doctor_rules;
 mod doctor_service;
 mod doctor_sys;
+mod err;
 mod interactive;
 mod interactive_io;
+mod log;
 mod pkg_query;
 mod self_update;
 mod self_update_backend;
@@ -49,7 +51,7 @@ fn main() -> ExitCode {
     // panics on EPIPE instead of exiting quietly like every other CLI.
     // SAFETY: single-threaded startup, before any output is produced.
     unsafe { libc::signal(libc::SIGPIPE, libc::SIG_DFL) };
-    init_tracing();
+    log::init();
     match run() {
         Ok(()) => ExitCode::SUCCESS,
         Err(error) => {
@@ -57,7 +59,7 @@ fn main() -> ExitCode {
                 // clap already printed the usage text.
                 return ExitCode::from(2);
             }
-            tracing::error!("{error:#}");
+            crate::error!("{error:#}");
             ExitCode::FAILURE
         }
     }
@@ -81,40 +83,14 @@ pub(crate) fn quiet() -> bool {
     QUIET.load(std::sync::atomic::Ordering::Relaxed)
 }
 
-fn init_tracing() {
-    use tracing_subscriber::EnvFilter;
-
-    let env_filter = EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("warn"));
-
-    #[cfg(feature = "journald")]
-    {
-        use tracing_subscriber::prelude::*;
-        if let Ok(layer) = tracing_journald::layer() {
-            let _ = tracing_subscriber::registry()
-                .with(env_filter.clone())
-                .with(layer)
-                .try_init();
-            return;
-        }
-    }
-
-    let _ = tracing_subscriber::fmt()
-        .with_env_filter(env_filter)
-        .with_target(false)
-        .with_writer(std::io::stderr)
-        .try_init();
-}
-
-#[tracing::instrument(skip_all)]
 fn run() -> Result<()> {
     run_from(std::env::args().skip(1).collect())
 }
 
-/// Parse + dispatch. Takes bare args (no argv[0]); test-injectable. clap's
-/// help/version "errors" print and exit by default — here they map to Ok.
+/// Parse + dispatch. Takes bare args (no argv[0]); test-injectable.
+/// Help/version "errors" print and exit by default — here they map to Ok.
 pub(crate) fn run_from(args: Vec<String>) -> Result<()> {
-    use clap::Parser;
-    use clap::error::ErrorKind;
+    use cli::ErrorKind;
 
     // Reject single-dash long options (`-help`, `-version`) — clap would
     // silently split them into short flags; users must write `--help`.

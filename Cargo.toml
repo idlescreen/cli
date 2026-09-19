@@ -2,7 +2,7 @@
 authors = ["idlescreen developers"]
 repository = "https://github.com/idlescreen/cli"
 name = "idle-cli"
-version = "4.0.2"
+version = "4.0.3"
 edition = "2024"
 description = "Command-line interface for the IdleScreen daemon"
 license = "Apache-2.0"
@@ -16,22 +16,13 @@ path = "src/main.rs"
 
 [features]
 default = []
-journald = ["dep:tracing-journald"]
+# Also send log records to the systemd journal (minimal built-in sender,
+# previously `tracing-journald`).
+journald = []
 
 [dependencies]
 idle-dbus = { version = "0.7.0", path = "runtime/crates/idle-dbus" }
-clap = { version = "4.5", features = ["derive"] }
-clap_complete = "4.5"
 libc = "0.2"
-anyhow = "1"
-tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "json"] }
-tracing-journald = { version = "0.3", optional = true }
-
-# build.rs generates completions from the same cli.rs the binary uses.
-[build-dependencies]
-clap = { version = "4.5", features = ["derive"] }
-clap_complete = "4.5"
 
 [lints.rust]
 unused_must_use = "warn"

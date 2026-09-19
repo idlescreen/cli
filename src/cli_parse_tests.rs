@@ -7,9 +7,8 @@
 //! misdispatch.
 
 use crate::cli::{Cli, Cmd, ConfigOp, SaverOp};
-use clap::Parser;
 
-fn parse(args: &[&str]) -> Result<Cmd, clap::Error> {
+fn parse(args: &[&str]) -> Result<Cmd, crate::cli::ParseError> {
     Cli::try_parse_from(std::iter::once("idlescreen").chain(args.iter().copied())).map(|c| c.cmd)
 }
 
@@ -239,7 +238,7 @@ fn tui_passthrough_keeps_hyphen_args() {
 
 #[test]
 fn help_and_version_paths() {
-    use clap::error::ErrorKind::*;
+    use crate::cli::ErrorKind::*;
     // clap reports display paths as typed errors — run() maps them to Ok.
     assert_eq!(parse(&["--help"]).unwrap_err().kind(), DisplayHelp);
     assert_eq!(parse(&["help"]).unwrap_err().kind(), DisplayHelp);

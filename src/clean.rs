@@ -3,7 +3,7 @@
 use std::fs;
 use std::path::PathBuf;
 
-use anyhow::{Context, Result};
+use crate::err::{Context, Result};
 use idle_dbus::daemon_available;
 
 struct CleanPlan {
@@ -28,7 +28,6 @@ fn plan() -> CleanPlan {
     }
 }
 
-#[tracing::instrument]
 pub fn handle_clean(dry_run: bool) -> Result<()> {
     let plan = plan();
 

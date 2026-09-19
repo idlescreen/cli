@@ -1,0 +1,99 @@
+#compdef idlescreen
+# zsh completion for idlescreen(1) — maintained alongside src/cli.rs
+
+_idlescreen() {
+    local -a cmds
+    cmds=(
+        'status:Show daemon state (running, idle, saver, inhibitors)'
+        'config:View or change daemon configuration'
+        'enable:Turn the idle screensaver on'
+        'disable:Turn the idle screensaver off'
+        'timeout:Set or show the idle timeout in minutes'
+        'saver:Show or change the active saver'
+        'list:List installed savers'
+        'inhibitors:List active idle inhibitors'
+        'inhibit:Run a command while holding an idle inhibitor'
+        'start:Activate the screensaver now'
+        'preview:Preview a saver fullscreen'
+        'stop:Stop the running preview or idle presentation'
+        'fps-overlay:FPS overlay: on, off, or status'
+        'render-scale:Render scale or status'
+        'interactive:Interactive console panel'
+        'restart:Restart the idle-daemon user service'
+        'logs:Show daemon logs'
+        'doctor:Run diagnostics'
+        'clean:Remove stale run state and log caches'
+        'completion:Print a shell completion script'
+        'bug-report:Print a sanitized diagnostics bundle'
+        'self-update:Check for updates and upgrade packages'
+        'tui:Launch the full-screen TUI'
+        'version:Print CLI version'
+        'about:Print version plus project info'
+        'help:Print help for a subcommand'
+    )
+
+    _arguments -C \
+        '(-q --quiet)'{-q,--quiet}'[suppress confirmations]' \
+        '(-h --help)'{-h,--help}'[print help]' \
+        '(-V --version)'{-V,--version}'[print version]' \
+        '1:command:->command' \
+        '*::arguments:->args'
+
+    case "$state" in
+        command)
+            _describe -t commands 'idlescreen command' cmds
+            ;;
+        args)
+            case "$words[1]" in
+                config|cfg)
+                    if (( CURRENT == 3 )); then
+                        local -a ops
+                        ops=('list:show all keys' 'get:show one value' 'set:set a value' 'path:print file path' 'edit:open in $EDITOR' 'reset:restore defaults')
+                        _describe -t ops 'config op' ops
+                    else
+                        _arguments '(-j --json)'{-j,--json}'[JSON output]' '(-y --yes)'{-y,--yes}'[skip confirmation]'
+                    fi
+                    ;;
+                saver|sv)
+                    if (( CURRENT == 3 )); then
+                        _values 'saver op' 'set:set active saver' 'list:list installed savers'
+                    else
+                        _arguments '(-j --json)'{-j,--json}'[JSON output]'
+                    fi
+                    ;;
+                status|st|list|ls|inhibitors|inhib|timeout|t|version|v)
+                    _arguments '(-j --json)'{-j,--json}'[JSON output]' '(-l --long)'{-l,--long}'[extended info]'
+                    ;;
+                doctor|doc)
+                    _arguments '(-f --fix)'{-f,--fix}'[repair common issues]' '(-j --json)'{-j,--json}'[JSON output]'
+                    ;;
+                logs|log)
+                    _arguments '(-f --follow)'{-f,--follow}'[follow entries]' '(-n --lines)'{-n,--lines}'[entry count]:lines:'
+                    ;;
+                clean|cl)
+                    _arguments '(-n --dry-run)'{-n,--dry-run}'[show what would be removed]'
+                    ;;
+                self-update|update|upgrade)
+                    _arguments '(-c --check)'{-c,--check}'[report status without upgrading]'
+                    ;;
+                completion|comp)
+                    _values 'shell' bash zsh fish nushell powershell elvish
+                    ;;
+                inhibit|hold)
+                    _arguments '(-r --reason)'{-r,--reason}'[inhibitor reason]:reason:' '*:command:_command_names'
+                    ;;
+                preview|p)
+                    _arguments '(-t --timeout)'{-t,--timeout}'[auto-stop seconds]:seconds:' '1:saver name:'
+                    ;;
+                fps-overlay|fps)
+                    _values 'state' on off status
+                    ;;
+                render-scale|scale)
+                    _values 'scale' default status
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+_idlescreen "$@"

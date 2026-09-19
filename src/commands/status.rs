@@ -3,7 +3,7 @@
 
 //! Status display and version reporting for the idle CLI.
 
-use anyhow::{Context, Result};
+use crate::err::{Context, Result};
 use idle_dbus::{TranceClient, daemon_available};
 
 fn display_saver(name: &str) -> String {

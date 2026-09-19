@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2026 IdleScreen
 
-use anyhow::{Context, Result};
+use crate::err::{Context, Result};
 use idle_dbus::{DaemonStatus, TranceClient};
 
 use crate::interactive_io::{parse_one_based_index, read_prompted_line};

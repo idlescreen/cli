@@ -5,7 +5,7 @@
 
 use std::io::{self, Write};
 
-use anyhow::{Context, Result};
+use crate::err::{Context, Result};
 
 /// Print `prompt`, flush stdout, and read a single trimmed line from stdin.
 pub(crate) fn read_prompted_line(prompt: &str) -> Result<String> {

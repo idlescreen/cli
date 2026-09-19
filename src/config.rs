@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-use anyhow::{Context, Result, anyhow, bail};
+use crate::err::{Context, Result, anyhow, bail};
 use idle_dbus::TranceClient;
 
 use crate::cli::ConfigOp;

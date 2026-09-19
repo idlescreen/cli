@@ -1,4 +1,4 @@
-use anyhow::Result;
+use crate::err::Result;
 use std::process::Command;
 
 use super::doctor_checks::{CheckResult, Severity};

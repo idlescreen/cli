@@ -4,9 +4,8 @@ use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
 
-use anyhow::Result;
+use crate::err::Result;
 
-#[tracing::instrument]
 pub fn handle_bug_report() -> Result<()> {
     println!("Generating sanitized diagnostic report...");
 

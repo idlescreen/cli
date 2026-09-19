@@ -3,7 +3,7 @@
 //! Version-check/report half of `self-update`: query installed + repo
 //! candidate versions and print the status block before any upgrade runs.
 
-use anyhow::Result;
+use crate::err::Result;
 use std::path::Path;
 use std::process::Command;
 

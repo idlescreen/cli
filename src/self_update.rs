@@ -3,7 +3,7 @@
 //! Check whether a newer *system package* is available, then upgrade the
 //! installed IdleScreen package set via the system package manager.
 
-use anyhow::Result;
+use crate::err::Result;
 
 use super::self_update_backend::{
     Backend, detect_backend, installed_packages, installed_version, run_privileged,
@@ -17,7 +17,6 @@ use super::self_update_check::{
 /// installed IdleScreen package (`idle-*` / `idlescreen*`) via the system
 /// package manager. Status is printed first so the user sees what changed.
 /// `check_only` stops after the status report — nothing is installed.
-#[tracing::instrument]
 pub fn handle_self_update(check_only: bool) -> Result<()> {
     let Some(backend) = detect_backend() else {
         println!(" [!] No supported package manager detected (need DNF/RPM or APT).");
@@ -100,7 +99,7 @@ pub fn handle_self_update(check_only: bool) -> Result<()> {
                 }
             }
             if missed > 0 {
-                anyhow::bail!("{missed} package(s) did not reach the candidate version");
+                crate::err::bail!("{missed} package(s) did not reach the candidate version");
             }
         }
         None => match tracked.and_then(|(pkg, before)| {
@@ -134,12 +133,12 @@ fn run_step(step: &[&str], tail_pkgs: usize) -> Result<()> {
         Ok(s) => {
             println!(" [!] {} exited with {}", step[0], s);
             println!("     -> retry manually: sudo {}", step.join(" "));
-            anyhow::bail!("package upgrade failed: {} exited {}", step[0], s)
+            crate::err::bail!("package upgrade failed: {} exited {}", step[0], s)
         }
         Err(e) => {
             println!(" [!] Upgrade needs root: {e}");
             println!("     -> sudo {}", step.join(" "));
-            anyhow::bail!("package upgrade needs root: {e}")
+            crate::err::bail!("package upgrade needs root: {e}")
         }
     }
 }

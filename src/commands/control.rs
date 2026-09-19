@@ -3,7 +3,7 @@
 
 //! Control subcommands: timeout, saver, preview, overlays, inhibitors.
 
-use anyhow::{Context, Result, bail};
+use crate::err::{Context, Result, bail};
 use idle_dbus::TranceClient;
 
 fn json_esc(s: &str) -> String {
@@ -186,7 +186,7 @@ pub fn cmd_fps_overlay(client: &TranceClient, state: Option<&str>) -> Result<()>
                     println!("fps overlay: off")
                 }
             }),
-        Some(value) => Err(anyhow::anyhow!(
+        Some(value) => Err(crate::err::anyhow!(
             "unknown fps-overlay subcommand: {value} (use on, off, status)"
         )),
     }

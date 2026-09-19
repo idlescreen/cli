@@ -6,9 +6,8 @@
 //! lifecycle verbs, config file ops, and the global quiet/json flags.
 
 use crate::cli::{Cli, Cmd, ConfigOp};
-use clap::Parser;
 
-fn parse(args: &[&str]) -> Result<Cmd, clap::Error> {
+fn parse(args: &[&str]) -> Result<Cmd, crate::cli::ParseError> {
     Cli::try_parse_from(std::iter::once("idlescreen").chain(args.iter().copied())).map(|c| c.cmd)
 }
 

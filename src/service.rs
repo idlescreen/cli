@@ -8,7 +8,7 @@ use std::process::Command;
 use std::thread::sleep;
 use std::time::Duration;
 
-use anyhow::{Context, Result, bail};
+use crate::err::{Context, Result, bail};
 use idle_dbus::daemon_available;
 
 use crate::self_update_backend::which;
