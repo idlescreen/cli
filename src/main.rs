@@ -43,6 +43,7 @@ mod service;
 
 #[cfg(test)]
 mod cli_parse_tests;
+mod err_tests;
 #[cfg(test)]
 mod tests;
 
