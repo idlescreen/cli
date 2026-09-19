@@ -1,3 +1,9 @@
+idle-cli (4.0.6-1) unstable; urgency=medium
+
+  * studio2201 security-gate workflow + suite badge in README.
+
+ -- IdleScreen Maintainers <maintainers@idlescreen.dev>  Fri, 18 Sep 2026 00:00:00 +0000
+
 idle-cli (4.0.5-1) unstable; urgency=medium
 
   * Split oversized sources to satisfy the 256-line CI file cap.

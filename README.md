@@ -1,5 +1,7 @@
 # cli
 
+[![studio2201 Suite](https://img.shields.io/badge/studio2201-5%2F5%20Verified-2f6f5e?logo=shield)](https://studio2201.com/agents#badges)
+
 Daemon protocol commands — `status`, `preview`, `config`, `saver`,
 `inhibitors`, `doctor`, `self-update` — over D-Bus. Part of
 [IdleScreen](https://idlescreen.github.io) — modular Wayland
