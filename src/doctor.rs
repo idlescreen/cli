@@ -5,7 +5,6 @@ use std::process::Command;
 use super::doctor_checks::{CheckResult, Severity};
 use super::doctor_env::{check_protocol_hints, check_wayland};
 use super::doctor_fs::check_config;
-use super::doctor_shm::check_shm_permissions;
 use super::doctor_pkg::check_package_install;
 use super::doctor_rules::all_systems_nominal;
 use super::doctor_rules::tally;
@@ -13,6 +12,7 @@ use super::doctor_service::{
     check_dbus, check_inhibitor, check_running_pid, check_savers, check_systemd_service,
     check_tui_optional,
 };
+use super::doctor_shm::check_shm_permissions;
 use super::doctor_sys::{check_cgroup, check_fonts};
 
 /// Run diagnostics. When `fix` is true, attempt to reload/enable/restart the
