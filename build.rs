@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
+// perf: T3 · metric: build-time only; never runs at runtime · check: review
 // Copyright 2026 IdleScreen
 
 //! Ship the static shell completions into `target/<profile>/completions/`

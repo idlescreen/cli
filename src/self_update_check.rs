@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+// perf: T3 · metric: spawns a subprocess; cost is dominated by fork/exec, not by this page · check: review
 
 //! Version-check/report half of `self-update`: query installed + repo
 //! candidate versions and print the status block before any upgrade runs.

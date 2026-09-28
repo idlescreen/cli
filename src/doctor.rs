@@ -1,9 +1,11 @@
+// perf: T3 · metric: spawns a subprocess; cost is dominated by fork/exec, not by this page · check: review
 use crate::err::Result;
 use std::process::Command;
 
 use super::doctor_checks::{CheckResult, Severity};
 use super::doctor_env::{check_protocol_hints, check_wayland};
-use super::doctor_fs::{check_config, check_shm_permissions};
+use super::doctor_fs::check_config;
+use super::doctor_shm::check_shm_permissions;
 use super::doctor_pkg::check_package_install;
 use super::doctor_rules::all_systems_nominal;
 use super::doctor_rules::tally;

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+// perf: T3 · metric: touches the filesystem; dominated by syscall latency, not by this page's logic · check: test
 
 //! Filesystem and config checks for doctor.
 
@@ -128,23 +129,6 @@ fn validate_config_text(content: &str) -> (Vec<String>, Vec<String>) {
         }
     }
     (problems, unknown)
-}
-
-/// /dev/shm probe — a missing dir is a WARN (memfd fallback), not a failure.
-pub fn check_shm_permissions() -> CheckResult {
-    let shm_dir = PathBuf::from("/dev/shm");
-    if shm_dir.exists() {
-        let test_file = shm_dir.join(format!(".idle-doctor-test-{}", std::process::id()));
-        if fs::write(&test_file, b"test").is_ok() {
-            let _ = fs::remove_file(&test_file);
-            ok("Shared Memory", "/dev/shm writable")
-        } else {
-            fail("Shared Memory", "/dev/shm permission denied")
-                .with_fix("check /dev/shm mount and permissions")
-        }
-    } else {
-        warn("Shared Memory", "/dev/shm absent — memfd fallback in use")
-    }
 }
 
 /// Idle first, legacy `trance` second (matches idle-daemon). Shared with

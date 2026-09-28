@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+// perf: T3 · metric: test-only page, not compiled into the shipped binary · check: test
 
 use crate::self_update_backend::{
     parse_apt_upgradable, parse_dnf_check_update, parse_installed_lines,

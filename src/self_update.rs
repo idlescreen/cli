@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+// perf: T3 · metric: iterative; cost scales with its input, not with a fixed bound · check: review
 
 //! Check whether a newer *system package* is available, then upgrade the
 //! installed IdleScreen package set via the system package manager.

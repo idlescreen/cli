@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
+// perf: T3 · metric: spawns a subprocess; cost is dominated by fork/exec, not by this page · check: review
 // Copyright 2026 IdleScreen
 
 #![deny(clippy::unwrap_used)]
@@ -26,6 +27,7 @@ mod doctor;
 mod doctor_checks;
 mod doctor_env;
 mod doctor_fs;
+mod doctor_shm;
 mod doctor_pkg;
 mod doctor_pkg_fmt;
 mod doctor_rules;
