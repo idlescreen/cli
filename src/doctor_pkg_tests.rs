@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-// perf: T3 · metric: test-only page, not compiled into the shipped binary · check: test
 
 use super::package_rank;
 use crate::doctor_pkg_fmt::{display_entry, major_minor, skew_result};

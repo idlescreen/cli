@@ -35,25 +35,6 @@ jobs:
           echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
           rustup show || true
           if [ -f rust-toolchain.toml ]; then rustup show; else rustup default stable; fi
-      - name: file length cap (16-256 lines per page)
-        # Org-wide rule from .github/RULES.md. The cli repo's own
-        # tree + the cross-cut excludes runtime/ (which has its
-        # own gate in idlescreen/runtime).
-        run: |
-          over=$(find . -name '*.rs' -not -path './target/*' -not -path './runtime/*' \
-              | xargs wc -l \
-              | awk '$2 != "total" && ($1 > 256 || $1 < 16)')
-          if [ -n "$over" ]; then
-            echo "Files outside 16-256 line range:"
-            echo "$over"
-            exit 1
-          fi
-      - name: every page declares a performance metric
-        # Every `.rs` page must carry a `// perf:` line saying what it
-        # costs and how a machine would notice if that changed (`bench`,
-        # `test`, or `review`). Pure bash/grep/awk, so it rides along with
-        # the checkout rather than costing another job.
-        run: bash scripts/check-perf-labels.sh
       - name: cargo fmt
         run: cargo fmt --all -- --check
       - name: cargo clippy

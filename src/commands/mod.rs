@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: Apache-2.0
-// perf: T3 · metric: bounded single-pass work; no syscalls, no locks, no allocation on the steady path · check: review
 // Copyright 2026 IdleScreen
 
 //! CLI command handlers. Public surface is re-exported for `main`
@@ -15,8 +14,8 @@
 //!   - [`inhibitors_fmt`] — pretty-printing helpers shared by the
 //!     `cmd_inhibitors` path and the status page.
 //!
-//! Per RULES.md §2, each `cmd_*` entry point lives in the file
-//! that owns its command group — `commands/mod.rs` is the
+//! Each `cmd_*` entry point lives in the file that owns its command
+//! group — `commands/mod.rs` is the
 //! re-export hub, not a place for inline implementations. New
 //! commands land in `control.rs` (or a new sibling module
 //! matching the command's domain), not here.
