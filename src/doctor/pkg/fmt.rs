@@ -3,7 +3,7 @@
 //! Display/format helpers for the doctor package check: role labels for
 //! the summary line and the version-skew verdict.
 
-use super::doctor_checks::{CheckResult, warn};
+use crate::doctor::checks::{CheckResult, warn};
 
 /// Warn only on skew that matters: a CLI *newer* than the daemon can call
 /// D-Bus methods the daemon lacks. Post-split the repos version

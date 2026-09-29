@@ -4,7 +4,8 @@
 use crate::err::{Context, Result};
 use idle_dbus::{DaemonStatus, TranceClient};
 
-use crate::interactive_io::{parse_one_based_index, read_prompted_line};
+pub mod io;
+use io::{EndOfInput, parse_one_based_index, read_prompted_line};
 
 enum MenuAction {
     ToggleIdle,
@@ -25,7 +26,7 @@ pub fn run_interactive(client: &TranceClient) -> Result<()> {
         let action = match prompt_main_menu() {
             Ok(a) => a,
             Err(e)
-                if e.downcast_ref::<crate::interactive_io::EndOfInput>()
+                if e.downcast_ref::<EndOfInput>()
                     .is_some() =>
             {
                 break;
@@ -66,7 +67,7 @@ pub fn run_interactive(client: &TranceClient) -> Result<()> {
         })();
         match arm {
             Err(e)
-                if e.downcast_ref::<crate::interactive_io::EndOfInput>()
+                if e.downcast_ref::<EndOfInput>()
                     .is_some() =>
             {
                 break;

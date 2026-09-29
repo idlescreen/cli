@@ -6,7 +6,7 @@
 //! Regression guards for: daemon-down, idle disabled, inhibited marked FAIL
 //! so "ALL SYSTEMS NOMINAL" cannot lie while savers cannot run.
 
-use super::doctor_checks::{CheckResult, Severity, fail, ok};
+use super::checks::{CheckResult, Severity, fail, ok};
 
 /// D-Bus status interpretation after a successful GetStatus.
 pub fn dbus_status_check(

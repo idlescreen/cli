@@ -2,7 +2,7 @@
 
 //! Filesystem and config checks for doctor.
 
-use super::doctor_checks::{CheckResult, fail, ok, warn};
+use super::checks::{CheckResult, fail, ok, warn};
 use std::fs;
 use std::path::PathBuf;
 

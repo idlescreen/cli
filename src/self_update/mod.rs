@@ -5,11 +5,14 @@
 
 use crate::err::Result;
 
-use super::self_update_backend::{
+pub mod backend;
+pub mod check;
+
+use backend::{
     Backend, detect_backend, installed_packages, installed_version, run_privileged,
     upgradable_packages,
 };
-use super::self_update_check::{
+use check::{
     handle_apt_update, handle_dnf_update, version_cmp, versions_equalish,
 };
 
@@ -144,5 +147,4 @@ fn run_step(step: &[&str], tail_pkgs: usize) -> Result<()> {
 }
 
 #[cfg(test)]
-#[path = "self_update_tests.rs"]
 mod tests;

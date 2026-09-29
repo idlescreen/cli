@@ -2,7 +2,7 @@
 
 //! Environment and protocol soft-checks for doctor.
 
-use super::doctor_checks::{CheckResult, fail, ok, warn};
+use super::checks::{CheckResult, fail, ok, warn};
 
 pub fn check_wayland() -> CheckResult {
     match std::env::var("WAYLAND_DISPLAY") {

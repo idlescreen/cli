@@ -2,9 +2,9 @@
 
 //! Installed-package checks for doctor (rpm/dpkg probing).
 
-use super::doctor_checks::{CheckResult, fail, ok};
-use super::doctor_pkg_fmt::{display_entry, skew_result};
-use crate::pkg_query::{query_dpkg, query_dpkg_file, query_rpm_file};
+use crate::doctor::checks::{CheckResult, fail, ok};
+use super::fmt::{display_entry, skew_result};
+use super::query::{query_dpkg, query_dpkg_file, query_rpm_file};
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -96,7 +96,7 @@ pub fn check_package_install() -> CheckResult {
     ok("Package", summary)
 }
 
-fn package_rank(nevra_or_line: &str) -> u8 {
+pub(crate) fn package_rank(nevra_or_line: &str) -> u8 {
     // NEVRA / dpkg lines start with the package name.
     if nevra_or_line.starts_with("idle-daemon") {
         0
@@ -184,6 +184,3 @@ fn binary_on_path(name: &str) -> bool {
     which_path(name).is_some()
 }
 
-#[cfg(test)]
-#[path = "doctor_pkg_tests.rs"]
-mod tests;

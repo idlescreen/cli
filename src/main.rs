@@ -21,30 +21,13 @@ mod cli;
 mod commands;
 mod completion;
 mod config;
-mod config_file;
 mod doctor;
-mod doctor_checks;
-mod doctor_env;
-mod doctor_fs;
-mod doctor_pkg;
-mod doctor_pkg_fmt;
-mod doctor_rules;
-mod doctor_service;
-mod doctor_shm;
-mod doctor_sys;
 mod err;
 mod interactive;
-mod interactive_io;
 mod log;
-mod pkg_query;
 mod self_update;
-mod self_update_backend;
-mod self_update_check;
 mod service;
 
-#[cfg(test)]
-mod cli_parse_tests;
-mod err_tests;
 #[cfg(test)]
 mod tests;
 
@@ -151,7 +134,7 @@ pub(crate) fn run_from(args: Vec<String>) -> Result<()> {
             Cmd::SelfUpdate { check } => self_update::handle_self_update(check),
             Cmd::Restart => service::handle_restart(),
             Cmd::Logs { follow, lines } => service::handle_logs(follow, lines),
-            Cmd::Config { op, json } => config_file::handle_config_local(op, json),
+            Cmd::Config { op, json } => config::handle_config_local(op, json),
             Cmd::Tui { args } => {
                 let mut c = std::process::Command::new("idle-tui");
                 c.args(&args);

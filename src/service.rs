@@ -11,7 +11,7 @@ use std::time::Duration;
 use crate::err::{Context, Result, bail};
 use idle_dbus::daemon_available;
 
-use crate::self_update_backend::which;
+use crate::self_update::backend::which;
 
 /// Current unit plus the legacy name so old installs still show logs.
 const UNITS: &[&str] = &["idle-daemon", "trance-daemon"];

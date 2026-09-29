@@ -7,26 +7,20 @@
 mod cmd;
 mod cmd_args;
 mod cmd_flags;
-mod error;
-mod flags;
 mod help;
 mod inhibit;
-mod lexer;
 mod nested;
+pub mod syntax;
 
 pub use cmd::{Cli, Cmd, CompletionShell, ConfigOp, OverlayState, SaverOp};
-pub use error::{ErrorKind, ParseError};
+pub use syntax::{ErrorKind, ParseError};
 
 pub(crate) use cmd_args::*;
 pub(crate) use cmd_flags::*;
-pub(crate) use error::{
-    help_err, no_value, parse_u32, parse_u64, unknown_flag, unknown_short, usage_err,
-};
-pub(crate) use flags::*;
 pub(crate) use help::{help_for, help_top};
 pub(crate) use inhibit::*;
-pub(crate) use lexer::{Lexer, Tok};
 pub(crate) use nested::*;
+pub(crate) use syntax::*;
 
 impl Cli {
     /// clap-compatible entry point: first item is the program name.

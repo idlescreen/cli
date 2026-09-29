@@ -4,9 +4,7 @@
 
 //! idle-err shape tests: anyhow-compatible surface.
 
-#[cfg(test)]
-mod tests {
-    use crate::err::*;
+use super::*;
 
     #[test]
     fn msg_displays_text() {
@@ -94,4 +92,3 @@ mod tests {
         let e: Error = std::io::Error::new(std::io::ErrorKind::TimedOut, "slow").into();
         assert_eq!(format!("{e}"), "slow");
     }
-}

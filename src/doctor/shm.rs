@@ -4,7 +4,7 @@
 //! Split out of `doctor_fs.rs`, which was sitting exactly on the 256-line
 //! ceiling and had no room for a label or for any change at all.
 
-use super::doctor_checks::{CheckResult, fail, ok, warn};
+use super::checks::{CheckResult, fail, ok, warn};
 use std::fs;
 use std::path::PathBuf;
 

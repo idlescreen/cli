@@ -182,3 +182,7 @@ macro_rules! bail {
     };
 }
 pub(crate) use bail;
+
+#[cfg(test)]
+mod tests;
+

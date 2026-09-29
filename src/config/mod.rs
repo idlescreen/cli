@@ -3,6 +3,9 @@
 use crate::err::{Context, Result, anyhow, bail};
 use idle_dbus::TranceClient;
 
+pub mod file;
+pub use file::handle_config_local;
+
 use crate::cli::ConfigOp;
 
 pub fn handle_config(client: &TranceClient, op: Option<ConfigOp>, json: bool) -> Result<()> {

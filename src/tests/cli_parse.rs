@@ -249,5 +249,5 @@ fn help_and_version_paths() {
 // ---- hostile-input corpus ------------------------------------------------
 
 #[cfg(test)]
-#[path = "cli_parse_tests2.rs"]
+#[path = "cli_parse2.rs"]
 mod extra;

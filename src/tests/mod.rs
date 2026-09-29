@@ -4,6 +4,8 @@
 
 use crate::run_from;
 
+mod cli_parse;
+
 #[test]
 fn test_completion_bash() {
     let res = run_from(vec!["completion".to_string(), "bash".to_string()]);

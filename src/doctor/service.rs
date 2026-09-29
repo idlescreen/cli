@@ -2,14 +2,14 @@
 
 //! D-Bus, systemd, and process checks for doctor.
 
-use super::doctor_checks::{CheckResult, fail, ok, warn};
+use super::checks::{CheckResult, fail, ok, warn};
 use idle_dbus::TranceClient;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
 pub fn check_dbus() -> CheckResult {
-    use super::doctor_rules::{dbus_disconnected_check, dbus_status_check};
+    use super::rules::{dbus_disconnected_check, dbus_status_check};
     if let Ok(client) = TranceClient::connect() {
         match client.get_status() {
             Ok(status) => dbus_status_check(
@@ -218,7 +218,7 @@ fn exe_deleted_marker(pid: i32) -> Option<String> {
 }
 
 pub fn check_inhibitor() -> CheckResult {
-    use super::doctor_rules::inhibitor_status_check;
+    use super::rules::inhibitor_status_check;
     if let Ok(client) = TranceClient::connect()
         && let Ok(status) = client.get_status()
     {

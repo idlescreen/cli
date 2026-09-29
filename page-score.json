@@ -1,6 +1,6 @@
 {
  "repo": "cli",
- "rev": "1cec587",
+ "rev": "23d9d47",
  "dirty": true,
  "pages": [
   {
@@ -46,25 +46,11 @@
    "reach": 1
   },
   {
-   "path": "./src/cli/error.rs",
-   "lines": 96,
-   "bin_bytes": null,
-   "heat_pct": null,
-   "reach": 4
-  },
-  {
-   "path": "./src/cli/flags.rs",
-   "lines": 87,
-   "bin_bytes": null,
-   "heat_pct": null,
-   "reach": 1
-  },
-  {
    "path": "./src/cli/help.rs",
    "lines": 153,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 1
+   "reach": 2
   },
   {
    "path": "./src/cli/inhibit.rs",
@@ -74,11 +60,11 @@
    "reach": 1
   },
   {
-   "path": "./src/cli/lexer.rs",
-   "lines": 102,
+   "path": "./src/cli/mod.rs",
+   "lines": 220,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 1
+   "reach": 0
   },
   {
    "path": "./src/cli/nested.rs",
@@ -88,25 +74,32 @@
    "reach": 1
   },
   {
-   "path": "./src/cli_parse_tests2.rs",
-   "lines": 165,
+   "path": "./src/cli/syntax/error.rs",
+   "lines": 96,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 4
+  },
+  {
+   "path": "./src/cli/syntax/flags.rs",
+   "lines": 88,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 1
+  },
+  {
+   "path": "./src/cli/syntax/lexer.rs",
+   "lines": 102,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 1
+  },
+  {
+   "path": "./src/cli/syntax/mod.rs",
+   "lines": 9,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0
-  },
-  {
-   "path": "./src/cli_parse_tests.rs",
-   "lines": 253,
-   "bin_bytes": null,
-   "heat_pct": null,
-   "reach": 0
-  },
-  {
-   "path": "./src/cli.rs",
-   "lines": 226,
-   "bin_bytes": null,
-   "heat_pct": null,
-   "reach": 6
   },
   {
    "path": "./src/commands/control.rs",
@@ -144,123 +137,137 @@
    "reach": 1
   },
   {
-   "path": "./src/config_file.rs",
+   "path": "./src/config/file.rs",
    "lines": 88,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
   },
   {
-   "path": "./src/config.rs",
-   "lines": 206,
+   "path": "./src/config/mod.rs",
+   "lines": 209,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 2
+   "reach": 0
   },
   {
-   "path": "./src/doctor_checks.rs",
+   "path": "./src/doctor/checks.rs",
    "lines": 61,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 9
   },
   {
-   "path": "./src/doctor_env.rs",
+   "path": "./src/doctor/env.rs",
+   "lines": 50,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 11
+  },
+  {
+   "path": "./src/doctor/fs.rs",
+   "lines": 239,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 9
+  },
+  {
+   "path": "./src/doctor/mod.rs",
+   "lines": 221,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 0
+  },
+  {
+   "path": "./src/doctor/pkg/check.rs",
+   "lines": 186,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 1
+  },
+  {
+   "path": "./src/doctor/pkg/fmt.rs",
+   "lines": 91,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 8
+  },
+  {
+   "path": "./src/doctor/pkg/mod.rs",
+   "lines": 10,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 0
+  },
+  {
+   "path": "./src/doctor/pkg/query.rs",
    "lines": 50,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
   },
   {
-   "path": "./src/doctor_fs.rs",
-   "lines": 239,
-   "bin_bytes": null,
-   "heat_pct": null,
-   "reach": 2
-  },
-  {
-   "path": "./src/doctor_pkg_fmt.rs",
-   "lines": 91,
-   "bin_bytes": null,
-   "heat_pct": null,
-   "reach": 2
-  },
-  {
-   "path": "./src/doctor_pkg.rs",
-   "lines": 189,
-   "bin_bytes": null,
-   "heat_pct": null,
-   "reach": 1
-  },
-  {
-   "path": "./src/doctor_pkg_tests.rs",
+   "path": "./src/doctor/pkg/tests.rs",
    "lines": 75,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0
   },
   {
-   "path": "./src/doctor.rs",
-   "lines": 212,
-   "bin_bytes": null,
-   "heat_pct": null,
-   "reach": 1
-  },
-  {
-   "path": "./src/doctor_rules.rs",
+   "path": "./src/doctor/rules.rs",
    "lines": 240,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 2
   },
   {
-   "path": "./src/doctor_service.rs",
+   "path": "./src/doctor/service.rs",
    "lines": 246,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
   },
   {
-   "path": "./src/doctor_shm.rs",
+   "path": "./src/doctor/shm.rs",
    "lines": 47,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
   },
   {
-   "path": "./src/doctor_sys.rs",
+   "path": "./src/doctor/sys.rs",
    "lines": 57,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
   },
   {
-   "path": "./src/err.rs",
-   "lines": 184,
-   "bin_bytes": null,
-   "heat_pct": null,
-   "reach": 15
-  },
-  {
-   "path": "./src/err_tests.rs",
-   "lines": 97,
+   "path": "./src/err/mod.rs",
+   "lines": 188,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0
   },
   {
-   "path": "./src/interactive_io.rs",
+   "path": "./src/err/tests.rs",
+   "lines": 94,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 0
+  },
+  {
+   "path": "./src/interactive/io.rs",
    "lines": 45,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 1
+   "reach": 5
   },
   {
-   "path": "./src/interactive.rs",
-   "lines": 222,
+   "path": "./src/interactive/mod.rs",
+   "lines": 223,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 1
+   "reach": 0
   },
   {
    "path": "./src/log.rs",
@@ -271,48 +278,41 @@
   },
   {
    "path": "./src/main.rs",
-   "lines": 233,
+   "lines": 216,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0
   },
   {
-   "path": "./src/pkg_query.rs",
-   "lines": 50,
-   "bin_bytes": null,
-   "heat_pct": null,
-   "reach": 1
-  },
-  {
-   "path": "./src/self_update_backend.rs",
+   "path": "./src/self_update/backend.rs",
    "lines": 254,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 4
   },
   {
-   "path": "./src/self_update_check.rs",
+   "path": "./src/self_update/check.rs",
    "lines": 238,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
   },
   {
-   "path": "./src/self_update_check_tests.rs",
+   "path": "./src/self_update/check_tests.rs",
    "lines": 81,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0
   },
   {
-   "path": "./src/self_update.rs",
-   "lines": 148,
+   "path": "./src/self_update/mod.rs",
+   "lines": 150,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 1
+   "reach": 0
   },
   {
-   "path": "./src/self_update_tests.rs",
+   "path": "./src/self_update/tests.rs",
    "lines": 109,
    "bin_bytes": null,
    "heat_pct": null,
@@ -323,11 +323,25 @@
    "lines": 68,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 1
+   "reach": 2
   },
   {
-   "path": "./src/tests.rs",
-   "lines": 84,
+   "path": "./src/tests/cli_parse2.rs",
+   "lines": 165,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 0
+  },
+  {
+   "path": "./src/tests/cli_parse.rs",
+   "lines": 253,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 0
+  },
+  {
+   "path": "./src/tests/mod.rs",
+   "lines": 86,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0

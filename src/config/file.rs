@@ -10,7 +10,7 @@ use std::process::Command;
 use crate::err::{Context, Result, bail};
 
 use crate::cli::ConfigOp;
-use crate::doctor_fs::get_config_path;
+use crate::doctor::fs::get_config_path;
 
 pub fn handle_config_local(op: Option<ConfigOp>, json: bool) -> Result<()> {
     match op {

@@ -1,18 +1,27 @@
 use crate::err::Result;
 use std::process::Command;
 
-use super::doctor_checks::{CheckResult, Severity};
-use super::doctor_env::{check_protocol_hints, check_wayland};
-use super::doctor_fs::check_config;
-use super::doctor_pkg::check_package_install;
-use super::doctor_rules::all_systems_nominal;
-use super::doctor_rules::tally;
-use super::doctor_service::{
+pub mod checks;
+pub mod env;
+pub mod fs;
+pub mod pkg;
+pub mod rules;
+pub mod service;
+pub mod shm;
+pub mod sys;
+
+use checks::{CheckResult, Severity};
+use env::{check_protocol_hints, check_wayland};
+use fs::check_config;
+use pkg::check_package_install;
+use rules::all_systems_nominal;
+use rules::tally;
+use service::{
     check_dbus, check_inhibitor, check_running_pid, check_savers, check_systemd_service,
     check_tui_optional,
 };
-use super::doctor_shm::check_shm_permissions;
-use super::doctor_sys::{check_cgroup, check_fonts};
+use shm::check_shm_permissions;
+use sys::{check_cgroup, check_fonts};
 
 /// Run diagnostics. When `fix` is true, attempt to reload/enable/restart the
 /// user unit so upgrades do not require remembering systemctl flags.
@@ -86,7 +95,7 @@ fn fix_user_service_quiet() -> Result<()> {
 
 /// Drop a pid file whose process no longer exists.
 fn remove_stale_pid() {
-    let path = super::doctor_service::pid_file_path();
+    let path = service::pid_file_path();
     let Ok(content) = std::fs::read_to_string(&path) else {
         return;
     };

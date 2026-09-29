@@ -7,7 +7,7 @@ use crate::err::Result;
 use std::path::Path;
 use std::process::Command;
 
-use super::self_update_backend::{Backend, PKG_CANDIDATES, installed_version, stdout_trim};
+use super::backend::{Backend, PKG_CANDIDATES, installed_version, stdout_trim};
 
 fn dnf_available_version(pkg: &str) -> Option<String> {
     // `-y` auto-accepts repo key imports; without it repo_gpgcheck repos
@@ -234,5 +234,5 @@ pub fn version_cmp(a: &str, b: &str) -> std::cmp::Ordering {
 }
 
 #[cfg(test)]
-#[path = "self_update_check_tests.rs"]
+#[path = "check_tests.rs"]
 mod tests;

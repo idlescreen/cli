@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-use crate::self_update_backend::{
+use super::backend::{
     parse_apt_upgradable, parse_dnf_check_update, parse_installed_lines,
 };
 
