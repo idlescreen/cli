@@ -3,10 +3,8 @@
 
 //! Shared flag helpers used by the subcommand parsers.
 
+use super::{Lexer, ParseError, Tok, help_err, no_value, unknown_flag, unknown_short, usage_err};
 use crate::cli::help::help_for;
-use super::{
-    Lexer, ParseError, Tok, help_err, no_value, unknown_flag, unknown_short, usage_err,
-};
 
 /// A `--flag value` or `--flag=value` pair.
 pub(crate) fn flag_value(

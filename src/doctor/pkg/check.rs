@@ -2,9 +2,9 @@
 
 //! Installed-package checks for doctor (rpm/dpkg probing).
 
-use crate::doctor::checks::{CheckResult, fail, ok};
 use super::fmt::{display_entry, skew_result};
 use super::query::{query_dpkg, query_dpkg_file, query_rpm_file};
+use crate::doctor::checks::{CheckResult, fail, ok};
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -183,4 +183,3 @@ fn which_path(name: &str) -> Option<PathBuf> {
 fn binary_on_path(name: &str) -> bool {
     which_path(name).is_some()
 }
-

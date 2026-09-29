@@ -12,9 +12,7 @@ use backend::{
     Backend, detect_backend, installed_packages, installed_version, run_privileged,
     upgradable_packages,
 };
-use check::{
-    handle_apt_update, handle_dnf_update, version_cmp, versions_equalish,
-};
+use check::{handle_apt_update, handle_dnf_update, version_cmp, versions_equalish};
 
 /// `update`/`upgrade`/`self-update` all do the same thing: upgrade every
 /// installed IdleScreen package (`idle-*` / `idlescreen*`) via the system

@@ -1,7 +1,7 @@
 {
  "repo": "cli",
- "rev": "d7164d5",
- "dirty": false,
+ "rev": "d929f86",
+ "dirty": true,
  "pages": [
   {
    "path": "./build.rs",
@@ -82,7 +82,7 @@
   },
   {
    "path": "./src/cli/syntax/flags.rs",
-   "lines": 88,
+   "lines": 86,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
@@ -180,7 +180,7 @@
   },
   {
    "path": "./src/doctor/pkg/check.rs",
-   "lines": 186,
+   "lines": 185,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
@@ -243,7 +243,7 @@
   },
   {
    "path": "./src/err/mod.rs",
-   "lines": 188,
+   "lines": 187,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0
@@ -264,7 +264,7 @@
   },
   {
    "path": "./src/interactive/mod.rs",
-   "lines": 223,
+   "lines": 217,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0
@@ -306,14 +306,14 @@
   },
   {
    "path": "./src/self_update/mod.rs",
-   "lines": 150,
+   "lines": 148,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0
   },
   {
    "path": "./src/self_update/tests.rs",
-   "lines": 109,
+   "lines": 107,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0

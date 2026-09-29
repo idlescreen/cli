@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-use super::backend::{
-    parse_apt_upgradable, parse_dnf_check_update, parse_installed_lines,
-};
+use super::backend::{parse_apt_upgradable, parse_dnf_check_update, parse_installed_lines};
 
 fn inst() -> Vec<String> {
     vec![

@@ -25,10 +25,7 @@ pub fn run_interactive(client: &TranceClient) -> Result<()> {
         print_status(&status);
         let action = match prompt_main_menu() {
             Ok(a) => a,
-            Err(e)
-                if e.downcast_ref::<EndOfInput>()
-                    .is_some() =>
-            {
+            Err(e) if e.downcast_ref::<EndOfInput>().is_some() => {
                 break;
             }
             Err(e) => return Err(e),
@@ -66,10 +63,7 @@ pub fn run_interactive(client: &TranceClient) -> Result<()> {
             Ok(())
         })();
         match arm {
-            Err(e)
-                if e.downcast_ref::<EndOfInput>()
-                    .is_some() =>
-            {
+            Err(e) if e.downcast_ref::<EndOfInput>().is_some() => {
                 break;
             }
             Err(e) => return Err(e),
