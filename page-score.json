@@ -1,6 +1,6 @@
 {
  "repo": "cli",
- "rev": "edc4671",
+ "rev": "1cec587",
  "dirty": true,
  "pages": [
   {
@@ -333,5 +333,5 @@
    "reach": 0
   }
  ],
- "notes": "reach counts referencing files (shared file names qualified by ancestor dir); bin rlib filter off (no cargo metadata); bin_bytes from newest workspace dev rlib per crate via nm (inlining approx, bins re-link the same code; shims excluded, foreign paths never attributed);"
+ "notes": "reach counts referencing files (shared file names qualified by ancestor dir);"
 }
