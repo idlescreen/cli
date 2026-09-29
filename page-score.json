@@ -1,7 +1,7 @@
 {
  "repo": "cli",
- "rev": "23d9d47",
- "dirty": true,
+ "rev": "d7164d5",
+ "dirty": false,
  "pages": [
   {
    "path": "./build.rs",
