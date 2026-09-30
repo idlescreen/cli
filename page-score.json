@@ -1,7 +1,7 @@
 {
  "repo": "cli",
- "rev": "d929f86",
- "dirty": true,
+ "rev": "92c2030",
+ "dirty": false,
  "pages": [
   {
    "path": "./build.rs",
@@ -159,7 +159,7 @@
   },
   {
    "path": "./src/doctor/env.rs",
-   "lines": 50,
+   "lines": 186,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 11
@@ -173,7 +173,7 @@
   },
   {
    "path": "./src/doctor/mod.rs",
-   "lines": 221,
+   "lines": 227,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0
@@ -236,7 +236,7 @@
   },
   {
    "path": "./src/doctor/sys.rs",
-   "lines": 57,
+   "lines": 95,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
