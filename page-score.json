@@ -1,6 +1,6 @@
 {
  "repo": "cli",
- "rev": "c34054a",
+ "rev": "ddb8476",
  "dirty": false,
  "pages": [
   {
@@ -173,7 +173,7 @@
   },
   {
    "path": "./src/doctor_hw.rs",
-   "lines": 213,
+   "lines": 228,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
