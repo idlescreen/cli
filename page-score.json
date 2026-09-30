@@ -1,7 +1,7 @@
 {
  "repo": "cli",
- "rev": "46bc96a",
- "dirty": true,
+ "rev": "c34054a",
+ "dirty": false,
  "pages": [
   {
    "path": "./build.rs",
@@ -155,25 +155,32 @@
    "lines": 61,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 9
+   "reach": 10
   },
   {
    "path": "./src/doctor/env.rs",
    "lines": 186,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 11
+   "reach": 12
   },
   {
    "path": "./src/doctor/fs.rs",
    "lines": 240,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 9
+   "reach": 10
+  },
+  {
+   "path": "./src/doctor_hw.rs",
+   "lines": 213,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 1
   },
   {
    "path": "./src/doctor/mod.rs",
-   "lines": 227,
+   "lines": 228,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0
@@ -278,7 +285,7 @@
   },
   {
    "path": "./src/main.rs",
-   "lines": 216,
+   "lines": 217,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0

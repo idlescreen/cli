@@ -22,6 +22,7 @@ mod commands;
 mod completion;
 mod config;
 mod doctor;
+pub(crate) mod doctor_hw;
 mod err;
 mod interactive;
 mod log;

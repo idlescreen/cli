@@ -37,7 +37,7 @@ pub fn run_doctor(fix: bool, json: bool) -> Result<()> {
         let _ = fix_user_service_quiet();
     }
 
-    let results = vec![
+    let mut results = vec![
         check_wayland(),
         check_protocol_hints(),
         check_dbus(),
@@ -56,6 +56,7 @@ pub fn run_doctor(fix: bool, json: bool) -> Result<()> {
         check_portal_settings(),
         check_package_install(),
     ];
+    results.extend(crate::doctor_hw::check_hardware());
 
     if json {
         print_json(&results);
