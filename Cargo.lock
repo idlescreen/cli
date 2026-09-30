@@ -207,6 +207,7 @@ version = "4.0.10"
 dependencies = [
  "idle-dbus",
  "libc",
+ "zbus",
 ]
 
 [[package]]

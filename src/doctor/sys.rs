@@ -55,3 +55,41 @@ fn font_check_via_fc_list() -> bool {
         }
     }
 }
+
+/// Dirty-rectangle diffing SIMD acceleration check (AVX2 on x86_64, NEON on aarch64).
+pub fn check_simd() -> CheckResult {
+    #[cfg(target_arch = "x86_64")]
+    {
+        if is_x86_feature_detected!("avx2") {
+            return ok("SIMD Acceleration", "AVX2 dirty-rect diffing available");
+        }
+    }
+
+    #[cfg(target_arch = "aarch64")]
+    {
+        return ok("SIMD Acceleration", "NEON dirty-rect diffing available");
+    }
+
+    warn(
+        "SIMD Acceleration",
+        "no AVX2/NEON detected; dirty-rect diffing using scalar fallback",
+    )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_check_simd() {
+        let res = check_simd();
+        assert_eq!(res.name, "SIMD Acceleration");
+        assert!(res.passed());
+    }
+
+    #[test]
+    fn test_font_check() {
+        let res = check_fonts();
+        assert_eq!(res.name, "System Fonts");
+    }
+}

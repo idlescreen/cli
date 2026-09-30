@@ -48,3 +48,139 @@ pub fn check_protocol_hints() -> CheckResult {
         .with_fix("see docs/BOUNDARIES.md for the compositor support matrix")
     }
 }
+
+pub fn check_upower() -> CheckResult {
+    let conn = match zbus::blocking::Connection::system() {
+        Ok(c) => c,
+        Err(_) => {
+            return warn(
+                "UPower Service",
+                "cannot connect to system bus — battery status unavailable",
+            )
+            .with_fix("ensure dbus system broker is running");
+        }
+    };
+
+    let proxy = match zbus::blocking::Proxy::new(
+        &conn,
+        "org.freedesktop.UPower",
+        "/org/freedesktop/UPower",
+        "org.freedesktop.UPower",
+    ) {
+        Ok(p) => p,
+        Err(e) => {
+            return warn("UPower Service", format!("UPower proxy error: {e}"));
+        }
+    };
+
+    match proxy.get_property::<bool>("OnBattery") {
+        Ok(on_battery) => ok(
+            "UPower Service",
+            format!("available (on_battery={on_battery})"),
+        ),
+        Err(e) => warn("UPower Service", format!("UPower unavailable: {e}"))
+            .with_fix("install upower or start upower.service"),
+    }
+}
+
+pub fn check_audio_monitor() -> CheckResult {
+    let rt_dir = match std::env::var("XDG_RUNTIME_DIR") {
+        Ok(dir) => std::path::PathBuf::from(dir),
+        Err(_) => {
+            return warn(
+                "Audio Monitor",
+                "XDG_RUNTIME_DIR unset — audio monitor streams unavailable",
+            )
+            .with_fix("run inside a desktop user session");
+        }
+    };
+
+    let has_pulse = rt_dir.join("pulse/native").exists();
+    let has_pw = rt_dir.join("pipewire-0").exists();
+
+    if has_pw {
+        ok("Audio Monitor", "PipeWire monitor stream available")
+    } else if has_pulse {
+        ok("Audio Monitor", "PulseAudio monitor stream available")
+    } else {
+        warn(
+            "Audio Monitor",
+            "neither PipeWire nor PulseAudio socket found — audio-reactive savers will run silent",
+        )
+        .with_fix("ensure pipewire or pulseaudio is running in user session")
+    }
+}
+
+pub fn check_portal_settings() -> CheckResult {
+    let conn = match zbus::blocking::Connection::session() {
+        Ok(c) => c,
+        Err(_) => {
+            return warn(
+                "Portal Settings",
+                "cannot connect to session bus — theme detection unavailable",
+            )
+            .with_fix("run inside a graphical user session");
+        }
+    };
+
+    let proxy = match zbus::blocking::Proxy::new(
+        &conn,
+        "org.freedesktop.portal.Desktop",
+        "/org/freedesktop/portal/desktop",
+        "org.freedesktop.portal.Settings",
+    ) {
+        Ok(p) => p,
+        Err(e) => {
+            return warn("Portal Settings", format!("portal proxy error: {e}"));
+        }
+    };
+
+    let reply: std::result::Result<(zbus::zvariant::OwnedValue,), _> =
+        proxy.call("Read", &("org.freedesktop.appearance", "color-scheme"));
+    match reply {
+        Ok(_) => ok("Portal Settings", "desktop appearance portal available"),
+        Err(e) => warn(
+            "Portal Settings",
+            format!("portal appearance unavailable ({e})"),
+        )
+        .with_fix("install xdg-desktop-portal and a DE portal backend"),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_check_wayland() {
+        let res = check_wayland();
+        assert_eq!(res.name, "Environment");
+    }
+
+    #[test]
+    fn test_check_protocol_hints() {
+        let res = check_protocol_hints();
+        assert_eq!(res.name, "Protocols");
+    }
+
+    #[test]
+    fn test_check_upower() {
+        let res = check_upower();
+        assert_eq!(res.name, "UPower Service");
+        assert!(res.passed());
+    }
+
+    #[test]
+    fn test_check_audio_monitor() {
+        let res = check_audio_monitor();
+        assert_eq!(res.name, "Audio Monitor");
+        assert!(res.passed());
+    }
+
+    #[test]
+    fn test_check_portal_settings() {
+        let res = check_portal_settings();
+        assert_eq!(res.name, "Portal Settings");
+        assert!(res.passed());
+    }
+}

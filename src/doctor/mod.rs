@@ -11,7 +11,9 @@ pub mod shm;
 pub mod sys;
 
 use checks::{CheckResult, Severity};
-use env::{check_protocol_hints, check_wayland};
+use env::{
+    check_audio_monitor, check_portal_settings, check_protocol_hints, check_upower, check_wayland,
+};
 use fs::check_config;
 use pkg::check_package_install;
 use rules::all_systems_nominal;
@@ -21,7 +23,7 @@ use service::{
     check_tui_optional,
 };
 use shm::check_shm_permissions;
-use sys::{check_cgroup, check_fonts};
+use sys::{check_cgroup, check_fonts, check_simd};
 
 /// Run diagnostics. When `fix` is true, attempt to reload/enable/restart the
 /// user unit so upgrades do not require remembering systemctl flags.
@@ -47,7 +49,11 @@ pub fn run_doctor(fix: bool, json: bool) -> Result<()> {
         check_config(),
         check_shm_permissions(),
         check_cgroup(),
+        check_simd(),
         check_fonts(),
+        check_upower(),
+        check_audio_monitor(),
+        check_portal_settings(),
         check_package_install(),
     ];
 

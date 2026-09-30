@@ -23,6 +23,7 @@ journald = []
 [dependencies]
 idle-dbus = { version = "0.7.0", path = "runtime/crates/idle-dbus" }
 libc = "0.2"
+zbus = { version = "5.19", default-features = false, features = ["blocking-api"] }
 
 [lints.rust]
 unused_must_use = "warn"
