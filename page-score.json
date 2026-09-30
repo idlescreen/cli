@@ -1,7 +1,7 @@
 {
  "repo": "cli",
- "rev": "92c2030",
- "dirty": false,
+ "rev": "46bc96a",
+ "dirty": true,
  "pages": [
   {
    "path": "./build.rs",
@@ -166,7 +166,7 @@
   },
   {
    "path": "./src/doctor/fs.rs",
-   "lines": 239,
+   "lines": 240,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 9
