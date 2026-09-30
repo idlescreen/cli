@@ -16,6 +16,7 @@ const KNOWN_KEYS: &[&str] = &[
     "render_scale",
     "theme",
     "strict_control",
+    "inhibit_on_media",
     // Legacy — parsed but ignored (GPU upscaler removed).
     "gpu_enabled",
 ];
@@ -108,9 +109,8 @@ fn validate_config_text(content: &str) -> (Vec<String>, Vec<String>) {
                 .parse::<u32>()
                 .ok()
                 .is_none_or(|n| !(1..=240).contains(&n)),
-            "idle_enabled" | "show_fps_overlay" | "gpu_enabled" | "strict_control" => {
-                val.parse::<bool>().is_err()
-            }
+            "idle_enabled" | "show_fps_overlay" | "gpu_enabled" | "strict_control"
+            | "inhibit_on_media" => val.parse::<bool>().is_err(),
             "render_scale" => {
                 !val.is_empty()
                     && !val.eq_ignore_ascii_case("null")
@@ -198,6 +198,7 @@ mod tests {
             "idle_timeout_mins: abc",
             "idle_enabled: maybe",
             "strict_control: yes",
+            "inhibit_on_media: notabool",
             "render_scale: fast",
             "theme: ultraviolet",
         ] {
