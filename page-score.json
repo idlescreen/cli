@@ -1,7 +1,7 @@
 {
  "repo": "cli",
- "rev": "ddb8476",
- "dirty": false,
+ "rev": "74985db",
+ "dirty": true,
  "pages": [
   {
    "path": "./build.rs",
@@ -173,7 +173,7 @@
   },
   {
    "path": "./src/doctor_hw.rs",
-   "lines": 228,
+   "lines": 255,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
