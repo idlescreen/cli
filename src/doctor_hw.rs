@@ -117,16 +117,55 @@ pub fn check_hdr() -> CheckResult {
     check_hdr_at(Path::new("/sys/class/drm"))
 }
 
+fn count_cpus_in_list(s: &str) -> usize {
+    s.trim()
+        .split(',')
+        .map(str::trim)
+        .filter(|p| !p.is_empty())
+        .map(|p| {
+            if let Some((start, end)) = p.split_once('-') {
+                match (start.trim().parse::<usize>(), end.trim().parse::<usize>()) {
+                    (Ok(a), Ok(b)) => b.saturating_sub(a).saturating_add(1),
+                    _ => 0,
+                }
+            } else {
+                usize::from(p.parse::<usize>().is_ok())
+            }
+        })
+        .sum()
+}
+
 pub fn check_ecores_at(cpu_dir: &Path) -> CheckResult {
     let mut count = 0usize;
-    if let Ok(entries) = fs::read_dir(cpu_dir) {
+    if let Ok(entries) = fs::read_dir(cpu_dir.join("types")) {
         for entry in entries.flatten() {
-            let name = entry.file_name();
-            let s = name.to_string_lossy();
+            let name = entry.file_name().to_string_lossy().to_ascii_lowercase();
+            if name.contains("atom") {
+                let content = fs::read_to_string(entry.path().join("cpulist"))
+                    .or_else(|_| fs::read_to_string(entry.path().join("cpus")));
+                if let Ok(s) = content {
+                    count = count.saturating_add(count_cpus_in_list(&s));
+                }
+            }
+        }
+    }
+    if count == 0
+        && let Ok(entries) = fs::read_dir(cpu_dir)
+    {
+        for entry in entries.flatten() {
+            let s = entry.file_name().to_string_lossy().into_owned();
             if s.starts_with("cpu") && s[3..].chars().all(|c| c.is_ascii_digit()) {
                 let p = entry.path().join("topology/core_type");
-                if fs::read_to_string(p).is_ok_and(|v| v.trim().eq_ignore_ascii_case("atom")) {
-                    count = count.saturating_add(1);
+                if let Ok(v) = fs::read_to_string(p) {
+                    let v = v.trim().to_ascii_lowercase();
+                    if v.contains("atom")
+                        || v == "0x20"
+                        || v == "20"
+                        || v == "32"
+                        || v.contains("efficient")
+                    {
+                        count = count.saturating_add(1);
+                    }
                 }
             }
         }
@@ -173,28 +212,14 @@ mod tests {
     fn test_mock_nodes() {
         let temp = std::env::temp_dir().join("test_doctor_nodes");
         let _ = fs::create_dir_all(&temp);
-        assert_eq!(
-            check_gpu_at(&temp).severity,
-            crate::doctor::checks::Severity::Warn
-        );
-        assert_eq!(
-            check_direct_scanout_at(&temp).severity,
-            crate::doctor::checks::Severity::Warn
-        );
+        use crate::doctor::checks::Severity::{Ok as OkS, Warn as WarnS};
+        assert_eq!(check_gpu_at(&temp).severity, WarnS);
+        assert_eq!(check_direct_scanout_at(&temp).severity, WarnS);
         let _ = fs::write(temp.join("renderD128"), b"");
         let _ = fs::write(temp.join("card0"), b"");
-        assert_eq!(
-            check_gpu_at(&temp).severity,
-            crate::doctor::checks::Severity::Ok
-        );
-        assert_eq!(
-            check_direct_scanout_at(&temp).severity,
-            crate::doctor::checks::Severity::Ok
-        );
-        assert_eq!(
-            check_dmabuf_at(&temp, &temp).severity,
-            crate::doctor::checks::Severity::Ok
-        );
+        assert_eq!(check_gpu_at(&temp).severity, OkS);
+        assert_eq!(check_direct_scanout_at(&temp).severity, OkS);
+        assert_eq!(check_dmabuf_at(&temp, &temp).severity, OkS);
         let _ = fs::remove_dir_all(&temp);
     }
 
@@ -214,6 +239,10 @@ mod tests {
         let _ = fs::create_dir_all(&topo);
         let _ = fs::write(topo.join("core_type"), b"Atom\n");
         assert!(check_ecores_at(&cpu).detail.contains("1 efficiency cores"));
+        let atom = cpu.join("types/intel_atom_0");
+        let _ = fs::create_dir_all(&atom);
+        let _ = fs::write(atom.join("cpulist"), b"4-7\n");
+        assert!(check_ecores_at(&cpu).detail.contains("4 efficiency cores"));
         let _ = fs::remove_dir_all(&cpu);
     }
 
@@ -221,8 +250,6 @@ mod tests {
     fn test_check_hardware_real() {
         let results = check_hardware();
         assert_eq!(results.len(), 6);
-        for r in &results {
-            assert!(r.passed());
-        }
+        assert!(results.iter().all(|r| r.passed()));
     }
 }
