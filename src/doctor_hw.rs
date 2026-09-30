@@ -173,13 +173,28 @@ mod tests {
     fn test_mock_nodes() {
         let temp = std::env::temp_dir().join("test_doctor_nodes");
         let _ = fs::create_dir_all(&temp);
-        assert!(!check_gpu_at(&temp).detail.contains("accessible"));
-        assert!(!check_direct_scanout_at(&temp).detail.contains("accessible"));
+        assert_eq!(
+            check_gpu_at(&temp).severity,
+            crate::doctor::checks::Severity::Warn
+        );
+        assert_eq!(
+            check_direct_scanout_at(&temp).severity,
+            crate::doctor::checks::Severity::Warn
+        );
         let _ = fs::write(temp.join("renderD128"), b"");
         let _ = fs::write(temp.join("card0"), b"");
-        assert!(check_gpu_at(&temp).detail.contains("accessible"));
-        assert!(check_direct_scanout_at(&temp).detail.contains("accessible"));
-        assert!(check_dmabuf_at(&temp, &temp).detail.contains("supported"));
+        assert_eq!(
+            check_gpu_at(&temp).severity,
+            crate::doctor::checks::Severity::Ok
+        );
+        assert_eq!(
+            check_direct_scanout_at(&temp).severity,
+            crate::doctor::checks::Severity::Ok
+        );
+        assert_eq!(
+            check_dmabuf_at(&temp, &temp).severity,
+            crate::doctor::checks::Severity::Ok
+        );
         let _ = fs::remove_dir_all(&temp);
     }
 
