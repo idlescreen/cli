@@ -1,3 +1,11 @@
+idle-cli (4.0.11-1) unstable; urgency=medium
+
+  * Add hardware acceleration and display probe diagnostics to doctor.
+  * Validate inhibit_on_media config key in doctor fs check.
+  * Support cpulist and numeric core types in E-core discovery.
+
+ -- IdleScreen Maintainers <maintainers@idlescreen.dev>  Wed, 30 Sep 2026 12:00:00 +0000
+
 idle-cli (4.0.6-1) unstable; urgency=medium
 
   * studio2201 security-gate workflow + suite badge in README.
