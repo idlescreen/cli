@@ -86,7 +86,10 @@ pub fn check_vrr_at(drm_dir: &Path) -> CheckResult {
             "KMS VRR supported (current panel fixed refresh)",
         )
     } else {
-        ok("VRR / Adaptive Sync", "standard fixed refresh rate (no VRR detected)")
+        ok(
+            "VRR / Adaptive Sync",
+            "standard fixed refresh rate (no VRR detected)",
+        )
     }
 }
 
