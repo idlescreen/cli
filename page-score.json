@@ -1,7 +1,7 @@
 {
  "repo": "cli",
- "rev": "e20b1f3",
- "dirty": false,
+ "rev": "c5614cd",
+ "dirty": true,
  "pages": [
   {
    "path": "./build.rs",
@@ -155,32 +155,39 @@
    "lines": 61,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 10
+   "reach": 14
   },
   {
    "path": "./src/doctor/env.rs",
    "lines": 186,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 12
+   "reach": 13
   },
   {
    "path": "./src/doctor/fs.rs",
    "lines": 240,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 10
+   "reach": 12
   },
   {
    "path": "./src/doctor_hw.rs",
-   "lines": 255,
+   "lines": 212,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
   },
   {
+   "path": "./src/doctor_hw_tests.rs",
+   "lines": 50,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 0
+  },
+  {
    "path": "./src/doctor/mod.rs",
-   "lines": 228,
+   "lines": 231,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 0
@@ -233,6 +240,34 @@
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
+  },
+  {
+   "path": "./src/doctor/session_shell/classify.rs",
+   "lines": 101,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 2
+  },
+  {
+   "path": "./src/doctor/session_shell/facts.rs",
+   "lines": 89,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 3
+  },
+  {
+   "path": "./src/doctor/session_shell/mod.rs",
+   "lines": 17,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 0
+  },
+  {
+   "path": "./src/doctor/session_shell/tests.rs",
+   "lines": 118,
+   "bin_bytes": null,
+   "heat_pct": null,
+   "reach": 0
   },
   {
    "path": "./src/doctor/shm.rs",

@@ -7,6 +7,7 @@ pub mod fs;
 pub mod pkg;
 pub mod rules;
 pub mod service;
+pub mod session_shell;
 pub mod shm;
 pub mod sys;
 
@@ -22,6 +23,7 @@ use service::{
     check_dbus, check_inhibitor, check_running_pid, check_savers, check_systemd_service,
     check_tui_optional,
 };
+use session_shell::check_session_shell_integration;
 use shm::check_shm_permissions;
 use sys::{check_cgroup, check_fonts, check_simd};
 
@@ -55,6 +57,7 @@ pub fn run_doctor(fix: bool, json: bool) -> Result<()> {
         check_audio_monitor(),
         check_portal_settings(),
         check_package_install(),
+        check_session_shell_integration(),
     ];
     results.extend(crate::doctor_hw::check_hardware());
 
