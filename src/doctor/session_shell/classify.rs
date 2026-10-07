@@ -7,7 +7,7 @@
 //! visible from the daemon's own status, which is the whole reason this check
 //! exists.
 
-use super::facts::IntegrationFacts;
+use super::facts::{IntegrationFacts, Resolution};
 use crate::doctor::checks::{CheckResult, Severity};
 
 const NAME: &str = "Session shell integration";
@@ -45,6 +45,30 @@ fn classify_integration(facts: &IntegrationFacts) -> CheckResult {
     }
 
     if facts.shim_present {
+        // The shim works by winning the `PATH` name lookup. A shim that is on
+        // disk but loses that lookup is completely inert, and every other fact
+        // here still looks healthy — so this has to be checked before anything
+        // else in this branch, and it has to fail rather than warn.
+        match &facts.shim_resolution {
+            Resolution::Absent => {
+                return fail(
+                    "integration shim is installed but nothing named \
+                     `omarchy-launch-screensaver` is on PATH — the session shell cannot \
+                     reach it",
+                );
+            }
+            Resolution::Shadowed(other) => {
+                return fail(&format!(
+                    "integration shim is installed but PATH resolves \
+                     `omarchy-launch-screensaver` to {} — the session shell invokes that \
+                     instead and IdleScreen is never handed off to. Re-run from the \
+                     session's own login environment to confirm, then put \
+                     /usr/local/bin ahead of it on PATH",
+                    other.display()
+                ));
+            }
+            Resolution::Shim => {}
+        }
         if !facts.router_present {
             return fail(
                 "integration shim is installed but `idlescreen` is not on PATH — the \

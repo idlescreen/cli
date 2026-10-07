@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: MIT
 
 use super::classify::classify;
-use super::facts::IntegrationFacts;
+use super::facts::{IntegrationFacts, Resolution};
 use crate::doctor::checks::Severity;
+use std::path::PathBuf;
 
 fn facts() -> IntegrationFacts {
     IntegrationFacts {
         shell_present: true,
         shim_present: true,
+        shim_resolution: Resolution::Shim,
         router_present: true,
         idle_enabled: Some(false),
         inhibitor_count: Some(0),
@@ -61,6 +63,7 @@ fn no_shell_and_no_shim_is_healthy() {
     let result = classify(&IntegrationFacts {
         shell_present: false,
         shim_present: false,
+        shim_resolution: Resolution::Absent,
         router_present: true,
         idle_enabled: Some(true),
         inhibitor_count: Some(0),
@@ -115,4 +118,52 @@ fn an_unreachable_daemon_is_not_reported_as_zero_inhibitors() {
         ..facts()
     });
     assert_eq!(result.severity, Severity::Ok);
+}
+
+#[test]
+fn a_shadowed_shim_fails_instead_of_reporting_healthy() {
+    // The regression this exists for: every other fact is healthy, the shim is
+    // on disk, and yet interception does nothing because another directory
+    // earlier on PATH answers to the same name. Before this was checked the
+    // doctor said "the shim is wired" — a false green on the single failure
+    // mode that disables the whole integration.
+    let result = classify(&IntegrationFacts {
+        shim_resolution: Resolution::Shadowed(PathBuf::from("/usr/bin/omarchy-launch-screensaver")),
+        ..facts()
+    });
+    assert_eq!(result.severity, Severity::Fail);
+    assert!(
+        result
+            .detail
+            .contains("/usr/bin/omarchy-launch-screensaver"),
+        "the message must name the file that actually wins: {}",
+        result.detail
+    );
+}
+
+#[test]
+fn a_shadowed_shim_outranks_every_other_problem() {
+    // A shadowed shim makes the router check and the timer check moot: even a
+    // perfect config presents nothing. It must not be reported as a Warn.
+    let result = classify(&IntegrationFacts {
+        shim_resolution: Resolution::Shadowed(PathBuf::from("/usr/bin/omarchy-launch-screensaver")),
+        router_present: false,
+        idle_enabled: Some(true),
+        ..facts()
+    });
+    assert_eq!(result.severity, Severity::Fail);
+}
+
+#[test]
+fn a_shim_that_nothing_on_path_can_reach_fails() {
+    let result = classify(&IntegrationFacts {
+        shim_resolution: Resolution::Absent,
+        ..facts()
+    });
+    assert_eq!(result.severity, Severity::Fail);
+    assert!(
+        result.detail.contains("cannot reach it"),
+        "{}",
+        result.detail
+    );
 }
