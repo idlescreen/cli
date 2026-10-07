@@ -82,7 +82,11 @@ fn classify_integration(facts: &IntegrationFacts) -> CheckResult {
                 "idlescreen disable",
             );
         }
-        return ok("shell owns idle timing; IdleScreen draws and the shim is wired");
+        return ok(
+            "shell owns idle timing; IdleScreen draws and the shim is wired. The delay is \
+             the session shell's, not IdleScreen's — `idlescreen timeout` does not apply \
+             while the integration is active",
+        );
     }
 
     // No shim. If IdleScreen's own timer is off, nothing will ever present.
