@@ -18,12 +18,16 @@ pub fn check_wayland() -> CheckResult {
 /// Soft protocol/DE hints — an unrecognized DE warns rather than fails.
 pub fn check_protocol_hints() -> CheckResult {
     let de = std::env::var("XDG_CURRENT_DESKTOP").unwrap_or_default();
+    let lower = de.to_ascii_lowercase();
+    let is_gnome = lower.contains("gnome");
     if std::env::var("WAYLAND_DISPLAY").is_err() {
-        return fail(
-            "Protocols",
-            "WAYLAND_DISPLAY unset; need ext-idle-notify-v1 and zwlr_layer_shell_v1",
-        )
-        .with_fix("run inside a Wayland session");
+        let req = if is_gnome {
+            "GNOME Mutter needs Mutter IdleMonitor and session-lock/xdg-shell"
+        } else {
+            "need ext-idle-notify-v1 and zwlr_layer_shell_v1"
+        };
+        return fail("Protocols", format!("WAYLAND_DISPLAY unset; {req}"))
+            .with_fix("run inside a Wayland session");
     }
     let known = [
         "cosmic", "hyprland", "sway", "niri", "river", "wayfire", "kde", "plasma",
@@ -183,6 +187,14 @@ mod tests {
         assert_eq!(res.name, "Protocols");
         assert!(res.passed());
         assert!(res.detail.contains("GNOME Mutter"));
+
+        unsafe {
+            std::env::remove_var("WAYLAND_DISPLAY");
+        }
+        let res_unset = check_protocol_hints();
+        assert_eq!(res_unset.name, "Protocols");
+        assert!(!res_unset.passed());
+        assert!(res_unset.detail.contains("GNOME Mutter"));
         if let Some(de) = prev_de {
             unsafe {
                 std::env::set_var("XDG_CURRENT_DESKTOP", de);
