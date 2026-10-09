@@ -1,6 +1,6 @@
 {
  "repo": "cli",
- "rev": "9fa8b4d",
+ "rev": "96ffe4b",
  "dirty": true,
  "pages": [
   {
@@ -236,7 +236,7 @@
   },
   {
    "path": "./src/doctor/service.rs",
-   "lines": 249,
+   "lines": 246,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
