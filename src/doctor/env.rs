@@ -39,7 +39,9 @@ pub fn check_protocol_hints() -> CheckResult {
     if is_gnome {
         ok(
             "Protocols",
-            format!("WAYLAND_DISPLAY set; DE='{de_label}' (GNOME Mutter: Mutter IdleMonitor + session-lock/xdg-shell)"),
+            format!(
+                "WAYLAND_DISPLAY set; DE='{de_label}' (GNOME Mutter: Mutter IdleMonitor + session-lock/xdg-shell)"
+            ),
         )
     } else if friendly || de.is_empty() {
         ok(
@@ -182,14 +184,22 @@ mod tests {
         assert!(res.passed());
         assert!(res.detail.contains("GNOME Mutter"));
         if let Some(de) = prev_de {
-            unsafe { std::env::set_var("XDG_CURRENT_DESKTOP", de); }
+            unsafe {
+                std::env::set_var("XDG_CURRENT_DESKTOP", de);
+            }
         } else {
-            unsafe { std::env::remove_var("XDG_CURRENT_DESKTOP"); }
+            unsafe {
+                std::env::remove_var("XDG_CURRENT_DESKTOP");
+            }
         }
         if let Some(wl) = prev_wl {
-            unsafe { std::env::set_var("WAYLAND_DISPLAY", wl); }
+            unsafe {
+                std::env::set_var("WAYLAND_DISPLAY", wl);
+            }
         } else {
-            unsafe { std::env::remove_var("WAYLAND_DISPLAY"); }
+            unsafe {
+                std::env::remove_var("WAYLAND_DISPLAY");
+            }
         }
     }
 

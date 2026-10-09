@@ -1,6 +1,6 @@
 {
  "repo": "cli",
- "rev": "76f9650",
+ "rev": "3e7d889",
  "dirty": true,
  "pages": [
   {
@@ -159,7 +159,7 @@
   },
   {
    "path": "./src/doctor/env.rs",
-   "lines": 216,
+   "lines": 226,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 13
