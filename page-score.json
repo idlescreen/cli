@@ -1,6 +1,6 @@
 {
  "repo": "cli",
- "rev": "57eebc6",
+ "rev": "76f9650",
  "dirty": true,
  "pages": [
   {
@@ -159,7 +159,7 @@
   },
   {
    "path": "./src/doctor/env.rs",
-   "lines": 186,
+   "lines": 216,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 13
@@ -243,7 +243,7 @@
   },
   {
    "path": "./src/doctor/session_shell/classify.rs",
-   "lines": 125,
+   "lines": 129,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 2

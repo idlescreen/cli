@@ -29,13 +29,19 @@ pub fn check_protocol_hints() -> CheckResult {
         "cosmic", "hyprland", "sway", "niri", "river", "wayfire", "kde", "plasma",
     ];
     let lower = de.to_ascii_lowercase();
+    let is_gnome = lower.contains("gnome");
     let friendly = known.iter().any(|k| lower.contains(k));
     let de_label = if de.is_empty() {
         "unknown"
     } else {
         de.as_str()
     };
-    if friendly || de.is_empty() {
+    if is_gnome {
+        ok(
+            "Protocols",
+            format!("WAYLAND_DISPLAY set; DE='{de_label}' (GNOME Mutter: Mutter IdleMonitor + session-lock/xdg-shell)"),
+        )
+    } else if friendly || de.is_empty() {
         ok(
             "Protocols",
             format!("WAYLAND_DISPLAY set; DE='{de_label}' (need idle-notify + layer-shell)"),
@@ -161,6 +167,30 @@ mod tests {
     fn test_check_protocol_hints() {
         let res = check_protocol_hints();
         assert_eq!(res.name, "Protocols");
+    }
+
+    #[test]
+    fn test_check_protocol_hints_gnome() {
+        let prev_de = std::env::var("XDG_CURRENT_DESKTOP").ok();
+        let prev_wl = std::env::var("WAYLAND_DISPLAY").ok();
+        unsafe {
+            std::env::set_var("WAYLAND_DISPLAY", "wayland-0");
+            std::env::set_var("XDG_CURRENT_DESKTOP", "GNOME");
+        }
+        let res = check_protocol_hints();
+        assert_eq!(res.name, "Protocols");
+        assert!(res.passed());
+        assert!(res.detail.contains("GNOME Mutter"));
+        if let Some(de) = prev_de {
+            unsafe { std::env::set_var("XDG_CURRENT_DESKTOP", de); }
+        } else {
+            unsafe { std::env::remove_var("XDG_CURRENT_DESKTOP"); }
+        }
+        if let Some(wl) = prev_wl {
+            unsafe { std::env::set_var("WAYLAND_DISPLAY", wl); }
+        } else {
+            unsafe { std::env::remove_var("WAYLAND_DISPLAY"); }
+        }
     }
 
     #[test]
