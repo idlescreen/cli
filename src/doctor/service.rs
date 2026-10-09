@@ -76,7 +76,10 @@ pub fn check_savers() -> CheckResult {
         .with_fix("each plugin needs a <name>.idleplugin.toml beside the .so");
     }
 
-    if package_installed("idle-savers") || package_installed("idle-saver-ascii") {
+    if package_installed("idle-savers")
+        || package_installed("idle-saver-ascii")
+        || package_installed("idle-saver-brand")
+    {
         return ok("Savers", "idle-savers / idle-saver-* package present");
     }
 
