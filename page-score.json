@@ -1,6 +1,6 @@
 {
  "repo": "cli",
- "rev": "96ffe4b",
+ "rev": "5e5d59a",
  "dirty": true,
  "pages": [
   {
@@ -162,14 +162,14 @@
    "lines": 238,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 13
+   "reach": 14
   },
   {
    "path": "./src/doctor/fs.rs",
    "lines": 240,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 12
+   "reach": 13
   },
   {
    "path": "./src/doctor_hw.rs",
@@ -236,7 +236,7 @@
   },
   {
    "path": "./src/doctor/service.rs",
-   "lines": 246,
+   "lines": 253,
    "bin_bytes": null,
    "heat_pct": null,
    "reach": 1
@@ -362,10 +362,10 @@
   },
   {
    "path": "./src/service.rs",
-   "lines": 68,
+   "lines": 100,
    "bin_bytes": null,
    "heat_pct": null,
-   "reach": 2
+   "reach": 3
   },
   {
    "path": "./src/tests/cli_parse2.rs",

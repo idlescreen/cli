@@ -138,6 +138,13 @@ fn package_installed(pkg: &str) -> bool {
 /// `is-active` and `is-enabled` are separate facts — an active service that
 /// is not enabled silently dies at next login.
 pub fn check_systemd_service() -> CheckResult {
+    let init = idle_dbus::service::detect_init_system();
+    if init != idle_dbus::service::InitSystem::Systemd {
+        if idle_dbus::daemon_available() {
+            return ok("Init Service", format!("{init} (active)"));
+        }
+        return warn("Init Service", format!("{init} (inactive)")).with_fix("idlescreen restart");
+    }
     let active = Command::new("systemctl")
         .args(["--user", "is-active", "idle-daemon.service"])
         .output();
